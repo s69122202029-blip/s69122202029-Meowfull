@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeowMart — ร้านอาหารแมว</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF6EF; --ink:#2A241C; --ink-soft:#6b6255;
+    --sage:#67785A; --sage-dark:#4C5A41; --marigold:#E4A93F;
+    --plum:#6E3B3B; --line:#E4DCC9; --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;margin:0 0 .3em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:5;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:34px;height:34px;border-radius:50%;background:var(--sage);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:600;}
+  nav{display:flex;gap:6px;}
+  nav button{border:none;background:transparent;padding:8px 16px;border-radius:20px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:var(--ink-soft);cursor:pointer;}
+  nav button.active{background:var(--sage);color:#fff;}
+  .cart-pill{display:flex;align-items:center;gap:6px;border:1px solid var(--line);padding:7px 14px;border-radius:20px;font-size:13px;cursor:pointer;background:#fff;}
+  main{max-width:960px;margin:0 auto;padding:28px 32px 80px;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .lede{color:var(--ink-soft);max-width:560px;margin-bottom:22px;line-height:1.6;}
+  .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;padding:6px 13px;border-radius:20px;font-size:13px;margin:0 8px 8px 0;cursor:pointer;user-select:none;}
+  .chip input{accent-color:var(--sage);}
+  .chip.active{background:var(--sage);border-color:var(--sage);color:#fff;}
+  .console{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:#221E17;color:#EFE7D6;border-radius:10px;padding:12px 16px;margin:14px 0 22px;line-height:1.7;}
+  .console .op{color:var(--marigold);}
+  .console .lbl{color:#9FB08B;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;}
+  .thumb{font-size:34px;background:#F1ECDF;border-radius:10px;height:76px;display:flex;align-items:center;justify-content:center;}
+  .tagrow{display:flex;flex-wrap:wrap;gap:4px;}
+  .tag{font-size:10.5px;color:var(--sage-dark);background:#EDF1E7;padding:2px 7px;border-radius:8px;}
+  .price{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--plum);}
+  .btn{border:none;border-radius:8px;padding:8px 12px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;}
+  .btn-primary{background:var(--sage);color:#fff;}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+  section.block{margin-bottom:30px;}
+  .banner{background:#EDF1E7;border:1px solid #D8E2CE;border-radius:12px;padding:12px 16px;font-size:13.5px;margin-bottom:18px;color:var(--sage-dark);}
+  .catrow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+  .cart-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .cart-row .name{flex:1;font-size:14px;}
+  .qty{display:flex;align-items:center;gap:6px;}
+  .qty button{width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer;}
+  .summary{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:18px;}
+  .summary-row{display:flex;justify-content:space-between;font-size:14px;padding:4px 0;}
+  .summary-row.total{font-weight:600;font-size:17px;border-top:1px solid var(--line);margin-top:8px;padding-top:10px;}
+  .discount{color:var(--sage-dark);}
+  .promo-box{font-size:12.5px;padding:9px 12px;border-radius:8px;margin-top:10px;}
+  .promo-yes{background:#EDF1E7;color:var(--sage-dark);}
+  .promo-no{background:#F5F0E4;color:var(--ink-soft);}
+  .empty{color:var(--ink-soft);font-size:14px;padding:24px 0;text-align:center;}
+  select,input[type=text]{font-family:'Inter',sans-serif;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:#fff;font-size:13.5px;}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><div class="brand-mark">M</div><strong>MeowMart</strong></div>
+  <nav id="nav">
+    <button data-page="home" class="active">หน้าแรก</button>
+    <button data-page="products">สินค้า</button>
+    <button data-page="checkout">ตะกร้า</button>
+  </nav>
+  <div class="cart-pill" data-page="checkout" onclick="goPage('checkout')">🛒 <span id="cartCount">0</span> ชิ้น</div>
+</header>
+
+<main>
+
+<!-- HOME -->
+<section class="page active" id="page-home">
+  <div id="welcomeBanner"></div>
+  <h1>อาหารและของใช้สำหรับแมวคุณ</h1>
+  <p class="lede">คัดสรรอาหารแมวคุณภาพจากทุกหมวดหมู่ — ระบบจัดกลุ่มสินค้าด้วยเซต (Set) ทำให้ทุกหมวดหมู่ไม่ซ้ำกันโดยอัตโนมัติ</p>
+
+  <div class="console" id="homeConsole"></div>
+
+  <section class="block">
+    <h2 style="font-size:16px">หมวดหมู่ทั้งหมด</h2>
+    <div class="catrow" id="catRow"></div>
+  </section>
+
+  <section class="block">
+    <h2 style="font-size:16px">สินค้าแนะนำ</h2>
+    <div class="grid" id="featuredGrid"></div>
+  </section>
+
+  <section class="block" id="recentBlock" style="display:none">
+    <h2 style="font-size:16px">ดูล่าสุด</h2>
+    <div class="grid" id="recentGrid"></div>
+  </section>
+</section>
+
+<!-- PRODUCTS -->
+<section class="page" id="page-products">
+  <h1>สินค้าทั้งหมด</h1>
+  <p class="lede">กรองสินค้าด้วยการดำเนินการของเซต — เลือกโหมด Union (∪) หรือ Intersection (∩) แล้วตัดสินค้าที่ไม่ต้องการออกด้วย Difference (−)</p>
+
+  <div class="toolbar">
+    <input type="text" id="searchBox" placeholder="ค้นหาชื่อสินค้า...">
+    <select id="modeSelect">
+      <option value="OR">รวม (Union ∪) — มีแท็กใดแท็กหนึ่ง</option>
+      <option value="AND">ตรงทุกแท็ก (Intersection ∩)</option>
+    </select>
+  </div>
+
+  <div style="margin-bottom:6px;font-size:12.5px;color:var(--ink-soft)">รวม (Union/Intersection) — คลิกเพื่อเลือก:</div>
+  <div class="catrow" id="includeChips"></div>
+  <div style="margin-bottom:6px;font-size:12.5px;color:var(--ink-soft)">ไม่เอา (Difference −) — คลิกเพื่อตัดออก:</div>
+  <div class="catrow" id="excludeChips"></div>
+
+  <div class="console" id="prodConsole"></div>
+
+  <div class="grid" id="prodGrid"></div>
+</section>
+
+<!-- CHECKOUT -->
+<section class="page" id="page-checkout">
+  <h1>ตะกร้าสินค้า</h1>
+  <p class="lede">ตรวจสอบส่วนลดและค่าจัดส่งด้วยตรรกศาสตร์ (if–else, &&, ||, !) และแนะนำสินค้าเพิ่มด้วยส่วนต่างของเซต (Set Difference)</p>
+
+  <div id="cartList"></div>
+
+  <div class="summary" id="summaryBox"></div>
+
+  <section class="block" style="margin-top:26px" id="recoBlock">
+    <h2 style="font-size:16px">แนะนำเพิ่มเติมสำหรับคุณ</h2>
+    <div class="console" id="recoConsole"></div>
+    <div class="grid" id="recoGrid"></div>
+  </section>
+</section>
+
+</main>
+
+<script>
+/* ---------- ข้อมูลสินค้า ---------- */
+const products = [
+  {id:1, name:"Kitten Chicken Pâté", tags:["Wet","Kitten","Grain-Free"], price:65, emoji:"🍗", featured:false},
+  {id:2, name:"Salmon Recipe Dry", tags:["Dry","Adult","Grain-Free","Premium"], price:890, emoji:"🐟", featured:true},
+  {id:3, name:"Senior Joint Care Dry", tags:["Dry","Senior","Premium"], price:950, emoji:"🦴", featured:true},
+  {id:4, name:"Tuna Flakes Wet", tags:["Wet","Adult"], price:55, emoji:"🐠", featured:false},
+  {id:5, name:"Freeze-Dried Chicken Treats", tags:["Treats","Grain-Free","Premium"], price:220, emoji:"🍖", featured:true},
+  {id:6, name:"Catnip Feather Wand", tags:["Toy"], price:129, emoji:"🪶", featured:false},
+  {id:7, name:"Automatic Feeder Bowl", tags:["Accessory","Premium"], price:1290, emoji:"🥣", featured:true},
+  {id:8, name:"Kitten Growth Dry", tags:["Dry","Kitten"], price:480, emoji:"🐱", featured:false},
+  {id:9, name:"Duck & Pumpkin Wet", tags:["Wet","Grain-Free","Adult"], price:68, emoji:"🦆", featured:false},
+  {id:10, name:"Crunchy Fish Treats", tags:["Treats","Adult"], price:95, emoji:"🐟", featured:false},
+  {id:11, name:"Sisal Scratching Post", tags:["Accessory"], price:690, emoji:"🌾", featured:false},
+  {id:12, name:"Hairball Control Dry", tags:["Dry","Adult","Senior"], price:520, emoji:"🧶", featured:false},
+];
+
+/* ---------- state ---------- */
+let cart = JSON.parse(localStorage.getItem("meow_cart") || "{}"); // {id: qty}
+let recentSet = new Set(JSON.parse(localStorage.getItem("meow_recent") || "[]"));
+let includeTags = new Set();
+let excludeTags = new Set();
+let mode = "OR";
+
+/* ---------- navigation logic (if-else) ---------- */
+function goPage(name){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  if(name === "home"){
+    document.getElementById("page-home").classList.add("active");
+  } else if(name === "products"){
+    document.getElementById("page-products").classList.add("active");
+  } else {
+    document.getElementById("page-checkout").classList.add("active");
+  }
+  const navBtn = document.querySelector(`nav button[data-page="${name}"]`);
+  if(navBtn) navBtn.classList.add("active");
+  if(name === "checkout") renderCheckout();
+}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>goPage(b.dataset.page)));
+
+/* =====================================================
+   หน้า 1: HOME — Set สำหรับหมวดหมู่ + Logic สำหรับ banner
+   ===================================================== */
+function renderHome(){
+  // ใช้ Set เก็บหมวดหมู่ที่ไม่ซ้ำกันจากสินค้าทั้งหมด
+  const categorySet = new Set();
+  products.forEach(p => p.tags.forEach(t => categorySet.add(t)));
+
+  document.getElementById("homeConsole").innerHTML =
+    `<span class="lbl">categorySet = new Set()</span> → size = <span class="op">${categorySet.size}</span> หมวดหมู่ไม่ซ้ำกัน`;
+
+  const catRow = document.getElementById("catRow");
+  catRow.innerHTML = "";
+  categorySet.forEach(cat=>{
+    const el = document.createElement("div");
+    el.className = "chip";
+    el.textContent = cat;
+    el.onclick = ()=>{ includeTags = new Set([cat]); goPage("products"); renderProducts(); };
+    catRow.appendChild(el);
+  });
+
+  // Logic (if-else): แสดง banner ต้อนรับเฉพาะครั้งแรกที่เข้าเว็บ
+  const visited = localStorage.getItem("meow_visited");
+  const banner = document.getElementById("welcomeBanner");
+  if(!visited){
+    banner.innerHTML = `<div class="banner">ยินดีต้อนรับสู่ MeowMart! 🐾 นี่คือการมาเยือนครั้งแรกของคุณ</div>`;
+    localStorage.setItem("meow_visited","1");
+  } else {
+    banner.innerHTML = `<div class="banner">ยินดีต้อนรับกลับมา 🐾</div>`;
+  }
+
+  // featuredSet: เซตของสินค้าที่ถูกเลือกให้แนะนำ
+  const featuredSet = new Set(products.filter(p=>p.featured).map(p=>p.id));
+  const fg = document.getElementById("featuredGrid");
+  fg.innerHTML = "";
+  products.filter(p=>featuredSet.has(p.id)).forEach(p=> fg.appendChild(productCard(p)));
+
+  // recently viewed จาก localStorage
+  const recentBlock = document.getElementById("recentBlock");
+  const recentGrid = document.getElementById("recentGrid");
+  if(recentSet.size > 0){
+    recentBlock.style.display = "block";
+    recentGrid.innerHTML = "";
+    [...recentSet].reverse().slice(0,4).forEach(id=>{
+      const p = products.find(x=>x.id===id);
+      if(p) recentGrid.appendChild(productCard(p));
+    });
+  } else {
+    recentBlock.style.display = "none";
+  }
+}
+
+function markViewed(id){
+  recentSet.add(id);
+  localStorage.setItem("meow_recent", JSON.stringify([...recentSet]));
+}
+
+/* =====================================================
+   หน้า 2: PRODUCTS — Set operations (Union / Intersection / Difference)
+   ===================================================== */
+function renderIncludeChips(){
+  const categorySet = new Set();
+  products.forEach(p => p.tags.forEach(t => categorySet.add(t)));
+  const box = document.getElementById("includeChips");
+  box.innerHTML = "";
+  categorySet.forEach(cat=>{
+    const chip = document.createElement("div");
+    chip.className = "chip" + (includeTags.has(cat) ? " active" : "");
+    chip.textContent = cat;
+    chip.onclick = ()=>{
+      if(includeTags.has(cat)) includeTags.delete(cat); else includeTags.add(cat);
+      renderProducts();
+    };
+    box.appendChild(chip);
+  });
+  const exBox = document.getElementById("excludeChips");
+  exBox.innerHTML = "";
+  categorySet.forEach(cat=>{
+    const chip = document.createElement("div");
+    chip.className = "chip" + (excludeTags.has(cat) ? " active" : "");
+    chip.textContent = cat;
+    chip.onclick = ()=>{
+      if(excludeTags.has(cat)) excludeTags.delete(cat); else excludeTags.add(cat);
+      renderProducts();
+    };
+    exBox.appendChild(chip);
+  });
+}
+
+function renderProducts(){
+  renderIncludeChips();
+  const q = document.getElementById("searchBox").value.trim().toLowerCase();
+  mode = document.getElementById("modeSelect").value;
+
+  const filtered = products.filter(p=>{
+    const tagSet = new Set(p.tags);
+    let includeMatch;
+    if(includeTags.size === 0){
+      includeMatch = true; // ไม่ได้เลือกแท็ก = ผ่านทั้งหมด
+    } else if(mode === "AND"){
+      // Intersection: ต้องมีแท็กครบทุกตัวที่เลือก
+      includeMatch = [...includeTags].every(t => tagSet.has(t));
+    } else {
+      // Union: มีแท็กใดแท็กหนึ่งที่เลือกก็พอ
+      includeMatch = [...includeTags].some(t => tagSet.has(t));
+    }
+    // Difference: ต้องไม่มีแท็กที่อยู่ในชุด "ไม่เอา"
+    const excludeMatch = [...excludeTags].some(t => tagSet.has(t));
+    const searchMatch = q === "" || p.name.toLowerCase().includes(q);
+    return includeMatch && !excludeMatch && searchMatch;
+  });
+
+  const opSymbol = mode === "AND" ? "∩" : "∪";
+  const incStr = includeTags.size ? [...includeTags].join(` ${opSymbol} `) : "(ทั้งหมด)";
+  const excStr = excludeTags.size ? ` − { ${[...excludeTags].join(", ")} }` : "";
+  document.getElementById("prodConsole").innerHTML =
+    `<span class="lbl">ผลลัพธ์</span> = { ${incStr} }${excStr} → <span class="op">${filtered.length}</span> รายการ`;
+
+  const grid = document.getElementById("prodGrid");
+  grid.innerHTML = "";
+  if(filtered.length === 0){
+    grid.innerHTML = `<div class="empty">ไม่พบสินค้าตามเงื่อนไขนี้</div>`;
+  } else {
+    filtered.forEach(p=> grid.appendChild(productCard(p)));
+  }
+}
+
+/* ---------- การ์ดสินค้า (ใช้ร่วมกันทุกหน้า) ---------- */
+function productCard(p){
+  const el = document.createElement("div");
+  el.className = "card";
+  el.innerHTML = `
+    <div class="thumb">${p.emoji}</div>
+    <strong style="font-size:13.5px">${p.name}</strong>
+    <div class="tagrow">${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+    <div class="price">฿${p.price.toLocaleString()}</div>
+    <div style="display:flex;gap:6px;margin-top:4px">
+      <button class="btn btn-primary" data-add="${p.id}">ใส่ตะกร้า</button>
+      <button class="btn btn-ghost" data-view="${p.id}">ดู</button>
+    </div>`;
+  el.querySelector("[data-add]").onclick = ()=> addToCart(p.id);
+  el.querySelector("[data-view]").onclick = ()=>{ markViewed(p.id); renderHome(); };
+  return el;
+}
+
+/* =====================================================
+   หน้า 3: CHECKOUT — Logic (if-else, &&, ||, !) + Set (Difference) สำหรับสินค้าแนะนำ
+   ===================================================== */
+function addToCart(id){
+  cart[id] = (cart[id] || 0) + 1;
+  saveCart();
+  updateCartCount();
+}
+function changeQty(id, delta){
+  cart[id] = (cart[id] || 0) + delta;
+  if(cart[id] <= 0) delete cart[id];
+  saveCart();
+  renderCheckout();
+}
+function saveCart(){ localStorage.setItem("meow_cart", JSON.stringify(cart)); }
+function updateCartCount(){
+  const count = Object.values(cart).reduce((sum,q)=> sum+q, 0);
+  document.getElementById("cartCount").textContent = count;
+}
+
+function renderCheckout(){
+  const cartList = document.getElementById("cartList");
+  const items = Object.entries(cart).map(([id,qty])=>({...products.find(p=>p.id===Number(id)), qty}));
+
+  cartList.innerHTML = "";
+  if(items.length === 0){
+    cartList.innerHTML = `<div class="empty">ตะกร้าว่างเปล่า — ไปเลือกซื้อสินค้ากันเถอะ 🐾</div>`;
+  }
+  items.forEach(it=>{
+    const row = document.createElement("div");
+    row.className = "cart-row";
+    row.innerHTML = `
+      <div class="thumb" style="width:44px;height:44px;font-size:20px">${it.emoji}</div>
+      <div class="name">${it.name}<div class="tagrow">${it.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div></div>
+      <div class="qty">
+        <button data-minus="${it.id}">−</button>
+        <span class="mono">${it.qty}</span>
+        <button data-plus="${it.id}">+</button>
+      </div>
+      <div class="price">฿${(it.price*it.qty).toLocaleString()}</div>`;
+    row.querySelector("[data-minus]").onclick = ()=> changeQty(it.id,-1);
+    row.querySelector("[data-plus]").onclick = ()=> changeQty(it.id,1);
+    cartList.appendChild(row);
+  });
+
+  // ---- คำนวณด้วย reduce() ----
+  const subtotal = items.reduce((sum,it)=> sum + it.price*it.qty, 0);
+  const itemCount = items.reduce((sum,it)=> sum + it.qty, 0);
+  const hasPremium = items.some(it=> it.tags.includes("Premium"));
+  const hasTreats = items.some(it=> it.tags.includes("Treats"));
+
+  // ---- ตรรกศาสตร์ส่วนลด: if / else if / else, && , || , ! ----
+  let discountRate = 0;
+  let discountLabel = "ไม่มีส่วนลด";
+  if(subtotal >= 1000){
+    discountRate = 0.10;
+    discountLabel = "ลด 10% (ยอดซื้อครบ 1,000 บาทขึ้นไป)";
+  } else if(subtotal >= 500 && hasPremium){
+    discountRate = 0.07;
+    discountLabel = "ลด 7% (ยอดครบ 500 บาท และมีสินค้า Premium)";
+  } else if(itemCount >= 3 && hasTreats){
+    discountRate = 0.05;
+    discountLabel = "ลด 5% (ซื้อครบ 3 ชิ้น และมีสินค้าประเภทขนม)";
+  }
+  const discountAmount = subtotal * discountRate;
+
+  // เงื่อนไขจัดส่งฟรี: subtotal เกิน 500 หรือ มีสินค้า Premium แต่ต้องไม่ใช่ตะกร้าว่าง
+  const freeShipping = (subtotal > 500 || hasPremium) && !(items.length === 0);
+  const shippingFee = freeShipping ? 0 : 50;
+
+  const total = subtotal - discountAmount + shippingFee;
+
+  const summary = document.getElementById("summaryBox");
+  summary.innerHTML = `
+    <div class="summary-row"><span>ยอดรวมสินค้า (${itemCount} ชิ้น)</span><span class="mono">฿${subtotal.toLocaleString()}</span></div>
+    <div class="summary-row discount"><span>ส่วนลด</span><span class="mono">−฿${discountAmount.toLocaleString()}</span></div>
+    <div class="summary-row"><span>ค่าจัดส่ง</span><span class="mono">${freeShipping ? "ฟรี" : "฿"+shippingFee}</span></div>
+    <div class="summary-row total"><span>ยอดชำระทั้งหมด</span><span class="mono">฿${total.toLocaleString()}</span></div>
+    <div class="promo-box ${discountRate>0 ? "promo-yes" : "promo-no"}">${discountLabel}</div>
+    <div class="promo-box ${freeShipping ? "promo-yes" : "promo-no"}">${freeShipping ? "จัดส่งฟรี ✓" : "เพิ่มอีก ฿"+(501-subtotal>0?501-subtotal:0)+" เพื่อจัดส่งฟรี"}</div>
+  `;
+
+  updateCartCount();
+  renderRecommendations(items);
+}
+
+/* ---- สินค้าแนะนำ: ใช้ Set Difference ---- */
+function renderRecommendations(items){
+  const cartIds = new Set(items.map(it=>it.id));
+  const cartCategories = new Set();
+  items.forEach(it=> it.tags.forEach(t=> cartCategories.add(t)));
+
+  // A = สินค้าที่มีหมวดหมู่ตรงกับที่อยู่ในตะกร้า
+  // B = สินค้าที่มีอยู่ในตะกร้าแล้ว
+  // แนะนำ = A − B (Set Difference) และต้องไม่ซ้ำกับของในตะกร้า
+  const recommended = products.filter(p=>
+    !cartIds.has(p.id) && p.tags.some(t=> cartCategories.has(t))
+  ).slice(0,4);
+
+  document.getElementById("recoConsole").innerHTML =
+    cartCategories.size === 0
+      ? `<span class="lbl">ใส่สินค้าลงตะกร้าเพื่อรับคำแนะนำ</span>`
+      : `<span class="lbl">แนะนำ</span> = A(หมวดตรงกับตะกร้า) <span class="op">−</span> B(มีอยู่แล้ว) → <span class="op">${recommended.length}</span> รายการ`;
+
+  const grid = document.getElementById("recoGrid");
+  grid.innerHTML = "";
+  if(recommended.length === 0){
+    grid.innerHTML = `<div class="empty">ไม่มีสินค้าที่จะแนะนำเพิ่ม</div>`;
+  } else {
+    recommended.forEach(p=> grid.appendChild(productCard(p)));
+  }
+}
+
+/* ---------- events ---------- */
+document.getElementById("searchBox").addEventListener("input", renderProducts);
+document.getElementById("modeSelect").addEventListener("change", renderProducts);
+
+/* ---------- init ---------- */
+renderHome();
+renderIncludeChips();
+renderProducts();
+updateCartCount();
+</script>
+</body>
+</html>
