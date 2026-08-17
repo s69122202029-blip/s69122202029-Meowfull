@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html_content = '''<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -608,4 +608,9 @@ renderProducts();
 updateCartCount();
 </script>
 </body>
-</html>
+</html>'''
+
+with open('meowmart.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("Saved HTML file successfully.")
