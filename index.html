@@ -58,11 +58,12 @@
   .promo-no{background:#F5F0E4;color:var(--ink-soft);}
   .empty{color:var(--ink-soft);font-size:14px;padding:24px 0;text-align:center;}
   select,input[type=text]{font-family:'Inter',sans-serif;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:#fff;font-size:13.5px;}
-  .toolbar.hero{position:relative;border-radius:18px;overflow:hidden;margin-bottom:26px;height:280px;}
-.hero img{width:100%;height:100%;object-fit:cover;display:block;}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(42,36,28,0.05) 0%, rgba(42,36,28,0.55) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:22px 26px;}
-.hero-overlay h2{color:#fff;font-size:24px;margin:0 0 4px;}
-.hero-overlay p{color:#F1ECDF;font-size:13.5px;margin:0;}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:6px;}
+  .hero{position:relative;border-radius:18px;overflow:hidden;margin-bottom:26px;height:280px;}
+  .hero img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(42,36,28,0.05) 0%, rgba(42,36,28,0.55) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:22px 26px;}
+  .hero-overlay h2{color:#fff;font-size:24px;margin:0 0 4px;}
+  .hero-overlay p{color:#F1ECDF;font-size:13.5px;margin:0;}
 </style>
 </head>
 <body>
@@ -82,12 +83,12 @@
 <!-- HOME -->
 <section class="page active" id="page-home">
   <div class="hero">
-  <img src="storefront.jpg" alt="หน้าร้าน MeowMart">
-  <div class="hero-overlay">
-    <h2>MeowMart</h2>
-    <p>อาหารแมวพรีเมี่ยม • ทรายแมว • ราคาประหยัด — แวะมาเยี่ยมชมสาขาของเราได้เลย</p>
+    <img src="storefront.jpg" alt="หน้าร้าน MeowMart">
+    <div class="hero-overlay">
+      <h2>MeowMart</h2>
+      <p>อาหารแมวพรีเมี่ยม • ทรายแมว • ราคาประหยัด — แวะมาเยี่ยมชมสาขาของเราได้เลย</p>
+    </div>
   </div>
-</div>
   <div id="welcomeBanner"></div>
   <h1>อาหารและของใช้สำหรับแมวคุณ</h1>
   <p class="lede">คัดสรรอาหารแมวคุณภาพจากทุกหมวดหมู่ — ระบบจัดกลุ่มสินค้าด้วยเซต (Set) ทำให้ทุกหมวดหมู่ไม่ซ้ำกันโดยอัตโนมัติ</p>
@@ -196,7 +197,6 @@ document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()
    หน้า 1: HOME — Set สำหรับหมวดหมู่ + Logic สำหรับ banner
    ===================================================== */
 function renderHome(){
-  // ใช้ Set เก็บหมวดหมู่ที่ไม่ซ้ำกันจากสินค้าทั้งหมด
   const categorySet = new Set();
   products.forEach(p => p.tags.forEach(t => categorySet.add(t)));
 
@@ -213,7 +213,6 @@ function renderHome(){
     catRow.appendChild(el);
   });
 
-  // Logic (if-else): แสดง banner ต้อนรับเฉพาะครั้งแรกที่เข้าเว็บ
   const visited = localStorage.getItem("meow_visited");
   const banner = document.getElementById("welcomeBanner");
   if(!visited){
@@ -223,13 +222,11 @@ function renderHome(){
     banner.innerHTML = `<div class="banner">ยินดีต้อนรับกลับมา 🐾</div>`;
   }
 
-  // featuredSet: เซตของสินค้าที่ถูกเลือกให้แนะนำ
   const featuredSet = new Set(products.filter(p=>p.featured).map(p=>p.id));
   const fg = document.getElementById("featuredGrid");
   fg.innerHTML = "";
   products.filter(p=>featuredSet.has(p.id)).forEach(p=> fg.appendChild(productCard(p)));
 
-  // recently viewed จาก localStorage
   const recentBlock = document.getElementById("recentBlock");
   const recentGrid = document.getElementById("recentGrid");
   if(recentSet.size > 0){
@@ -290,15 +287,12 @@ function renderProducts(){
     const tagSet = new Set(p.tags);
     let includeMatch;
     if(includeTags.size === 0){
-      includeMatch = true; // ไม่ได้เลือกแท็ก = ผ่านทั้งหมด
+      includeMatch = true;
     } else if(mode === "AND"){
-      // Intersection: ต้องมีแท็กครบทุกตัวที่เลือก
       includeMatch = [...includeTags].every(t => tagSet.has(t));
     } else {
-      // Union: มีแท็กใดแท็กหนึ่งที่เลือกก็พอ
       includeMatch = [...includeTags].some(t => tagSet.has(t));
     }
-    // Difference: ต้องไม่มีแท็กที่อยู่ในชุด "ไม่เอา"
     const excludeMatch = [...excludeTags].some(t => tagSet.has(t));
     const searchMatch = q === "" || p.name.toLowerCase().includes(q);
     return includeMatch && !excludeMatch && searchMatch;
@@ -319,7 +313,7 @@ function renderProducts(){
   }
 }
 
-/* ---------- การ์ดสินค้า (ใช้ร่วมกันทุกหน้า) ---------- */
+/* ---------- การ์ดสินค้า ---------- */
 function productCard(p){
   const el = document.createElement("div");
   el.className = "card";
@@ -338,7 +332,7 @@ function productCard(p){
 }
 
 /* =====================================================
-   หน้า 3: CHECKOUT — Logic (if-else, &&, ||, !) + Set (Difference) สำหรับสินค้าแนะนำ
+   หน้า 3: CHECKOUT
    ===================================================== */
 function addToCart(id){
   cart[id] = (cart[id] || 0) + 1;
@@ -382,13 +376,11 @@ function renderCheckout(){
     cartList.appendChild(row);
   });
 
-  // ---- คำนวณด้วย reduce() ----
   const subtotal = items.reduce((sum,it)=> sum + it.price*it.qty, 0);
   const itemCount = items.reduce((sum,it)=> sum + it.qty, 0);
   const hasPremium = items.some(it=> it.tags.includes("Premium"));
   const hasTreats = items.some(it=> it.tags.includes("Treats"));
 
-  // ---- ตรรกศาสตร์ส่วนลด: if / else if / else, && , || , ! ----
   let discountRate = 0;
   let discountLabel = "ไม่มีส่วนลด";
   if(subtotal >= 1000){
@@ -403,7 +395,6 @@ function renderCheckout(){
   }
   const discountAmount = subtotal * discountRate;
 
-  // เงื่อนไขจัดส่งฟรี: subtotal เกิน 500 หรือ มีสินค้า Premium แต่ต้องไม่ใช่ตะกร้าว่าง
   const freeShipping = (subtotal > 500 || hasPremium) && !(items.length === 0);
   const shippingFee = freeShipping ? 0 : 50;
 
@@ -429,9 +420,6 @@ function renderRecommendations(items){
   const cartCategories = new Set();
   items.forEach(it=> it.tags.forEach(t=> cartCategories.add(t)));
 
-  // A = สินค้าที่มีหมวดหมู่ตรงกับที่อยู่ในตะกร้า
-  // B = สินค้าที่มีอยู่ในตะกร้าแล้ว
-  // แนะนำ = A − B (Set Difference) และต้องไม่ซ้ำกับของในตะกร้า
   const recommended = products.filter(p=>
     !cartIds.has(p.id) && p.tags.some(t=> cartCategories.has(t))
   ).slice(0,4);
