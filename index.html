@@ -3,217 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Whisker & Bowl — ร้านอาหารแมว</title>
+<title>แมวอิ่ม MEOWFULL | ร้านอาหารแมว</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#23231f;
-    --cream:#faf6ec;
-    --paper:#f1ead9;
-    --amber:#c97b3d;
-    --amber-dark:#a8622c;
-    --fern:#3b5941;
-    --fern-light:#5c7a56;
-    --coral:#d9605a;
-    --line:#23231f22;
-    --radius:14px;
-    font-family: 'Work Sans', -apple-system, sans-serif;
+    --bg:#FFF8F0;
+    --ink:#22312B;
+    --ink-soft:#5B6B62;
+    --primary:#1B4B43;      /* deep teal - main brand */
+    --primary-dark:#123832;
+    --accent:#E76F51;       /* coral - CTA / price */
+    --warm:#F4A261;         /* peach - highlight */
+    --sage:#B7D8C1;         /* soft sage - chips bg */
+    --sage-deep:#7FAE8E;
+    --card:#FFFFFF;
+    --line:#E7DFCF;
+    --shadow: 0 10px 30px -12px rgba(27,75,67,.25);
+    --radius: 18px;
   }
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap');
-
-  *{box-sizing:border-box; margin:0; padding:0;}
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{
-    background:var(--cream);
-    color:var(--ink);
-    font-family:'Work Sans', sans-serif;
-    line-height:1.5;
-    padding-bottom:60px;
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Sarabun',sans-serif; font-size:16px; line-height:1.6;
   }
-  h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em;}
+  h1,h2,h3,h4,.display{ font-family:'Kanit',sans-serif; margin:0; }
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; cursor:pointer;}
 
-  /* ---------- HEADER / NAV ---------- */
+  /* ---------- NAV ---------- */
   header{
-    background:var(--ink);
-    color:var(--cream);
-    padding:14px 20px;
     position:sticky; top:0; z-index:50;
-    box-shadow:0 2px 10px rgba(0,0,0,.15);
+    background:var(--primary); color:#fff;
+    border-bottom:4px solid var(--warm);
   }
-  .headerRow{
-    max-width:1100px; margin:0 auto;
-    display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  .nav-wrap{
+    max-width:1120px; margin:0 auto; padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
   }
-  .logo{
-    font-family:'Fraunces', serif; font-size:1.4rem; font-weight:700;
-    display:flex; align-items:center; gap:8px;
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand .paw{ width:34px; height:34px; }
+  .brand-text{ font-family:'Kanit',sans-serif; font-weight:700; font-size:20px; line-height:1.1; }
+  .brand-text small{ display:block; font-family:'Sarabun',sans-serif; font-weight:400; font-size:11px; letter-spacing:.12em; opacity:.75; }
+  nav{ display:flex; gap:6px; }
+  .nav-btn{
+    border:none; background:transparent; color:#fff; opacity:.75;
+    font-weight:600; font-size:15px; padding:9px 14px; border-radius:999px;
+    transition:.18s;
   }
-  .logo span.tag{
-    font-family:'Work Sans'; font-size:.62rem; font-weight:600;
-    background:var(--amber); color:var(--ink); padding:2px 7px; border-radius:20px;
-    letter-spacing:.06em; text-transform:uppercase; margin-left:2px;
+  .nav-btn:hover{ opacity:1; background:rgba(255,255,255,.08); }
+  .nav-btn.is-active{ opacity:1; background:var(--warm); color:var(--primary-dark); }
+  .cart-pill{
+    display:flex; align-items:center; gap:7px; background:rgba(255,255,255,.12);
+    padding:8px 14px; border-radius:999px; font-weight:600; font-size:14px; border:none; color:#fff;
   }
-  nav{display:flex; gap:6px; align-items:center; flex-wrap:wrap;}
-  nav button{
-    background:transparent; border:1px solid transparent; color:var(--cream);
-    font-family:'Work Sans'; font-size:.92rem; font-weight:500;
-    padding:8px 14px; border-radius:20px; cursor:pointer; transition:.15s;
-  }
-  nav button:hover{background:#ffffff1a;}
-  nav button.active{background:var(--amber); color:var(--ink); font-weight:700;}
-  .cartBtn{
-    position:relative; display:flex; align-items:center; gap:6px;
-    background:var(--fern); color:var(--cream); border:none;
-    padding:8px 16px; border-radius:20px; font-weight:600; cursor:pointer; font-size:.92rem;
-  }
-  .cartBadge{
-    background:var(--coral); color:#fff; font-size:.72rem; font-weight:700;
-    min-width:19px; height:19px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center; padding:0 3px;
-  }
+  .cart-pill b{ background:var(--accent); color:#fff; border-radius:999px; padding:1px 8px; font-size:12px; }
 
-  main{max-width:1100px; margin:0 auto; padding:32px 20px;}
-  .page{display:none; animation:fadeIn .35s ease;}
-  .page.active{display:block;}
-  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  main{ max-width:1120px; margin:0 auto; padding:0 20px 80px; }
+  .page{ display:none; animation:fade .35s ease; }
+  .page.is-active{ display:block; }
+  @keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    background:var(--fern); color:var(--cream);
-    border-radius:20px; padding:44px 36px; margin-bottom:34px;
+  /* ---------- ART (illustrated product art, no external images needed) ---------- */
+  .art-wrap{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
     position:relative; overflow:hidden;
   }
-  .hero::after{
-    content:"🐾"; position:absolute; right:-10px; bottom:-30px; font-size:9rem; opacity:.12; transform:rotate(-12deg);
+  .art-wrap::before{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(rgba(255,255,255,.35) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
   }
-  .hero h1{font-size:2.1rem; max-width:520px;}
-  .hero p{margin-top:10px; max-width:460px; opacity:.9; font-size:1rem;}
-  .eyebrow{
-    font-size:.72rem; text-transform:uppercase; letter-spacing:.14em; font-weight:700;
-    color:var(--amber); margin-bottom:8px;
+  .art-icon{ width:44%; height:auto; position:relative; z-index:1; filter:drop-shadow(0 6px 10px rgba(0,0,0,.12)); }
+  .art-wrap.hero-art{ }
+
+  /* ---------- HOME ---------- */
+  .hero{
+    margin-top:28px; border-radius:28px; overflow:hidden; position:relative;
+    background:linear-gradient(120deg,var(--primary) 0%, var(--primary-dark) 100%);
+    color:#fff; padding:48px 40px; display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center;
   }
+  .hero h1{ font-size:38px; font-weight:800; line-height:1.25; }
+  .hero h1 span{ color:var(--warm); }
+  .hero p{ margin-top:14px; color:#DCEAE4; max-width:46ch; }
+  .hero-stats{ display:flex; gap:22px; margin-top:22px; flex-wrap:wrap; }
+  .hero-stats div{ background:rgba(255,255,255,.09); border-radius:14px; padding:10px 16px; }
+  .hero-stats b{ display:block; font-family:'Kanit'; font-size:22px; color:var(--warm); }
+  .hero-stats span{ font-size:12px; opacity:.85; }
+  .hero-img{ border-radius:20px; overflow:hidden; aspect-ratio:4/3; box-shadow:var(--shadow); background:linear-gradient(150deg,var(--warm),var(--accent)); }
+  .hero-img svg{ width:100%; height:100%; }
 
-  section.block{margin-bottom:38px;}
-  .blockHead{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:8px;}
-  .blockHead h2{font-size:1.35rem;}
-  .blockHead .muted{color:#23231f88; font-size:.85rem;}
+  section.block{ margin-top:52px; }
+  .block-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:18px; gap:12px; flex-wrap:wrap;}
+  .block-head h2{ font-size:24px; color:var(--primary-dark); }
+  .block-head p{ color:var(--ink-soft); margin-top:4px; font-size:14px; }
+  .eyebrow{ font-size:12px; font-weight:700; letter-spacing:.14em; color:var(--accent); text-transform:uppercase; }
 
-  /* ---------- CATEGORY CHIPS (built from a Set) ---------- */
-  .chipRow{display:flex; gap:10px; flex-wrap:wrap;}
+  .cat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .cat-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px;
+    text-align:left; transition:.18s; display:flex; flex-direction:column; gap:6px;
+  }
+  .cat-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--sage-deep); }
+  .cat-card .n{ font-family:'Kanit'; font-weight:700; font-size:17px; color:var(--primary-dark); }
+  .cat-card .c{ font-size:12px; color:var(--ink-soft); }
+  .cat-card .badge{ align-self:flex-start; background:var(--sage); color:var(--primary-dark); font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; }
+
+  .prod-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .prod-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+    display:flex; flex-direction:column; transition:.2s;
+  }
+  .prod-card:hover{ box-shadow:var(--shadow); transform:translateY(-4px); }
+  .prod-img{ aspect-ratio:4/3; overflow:hidden; }
+  .prod-body{ padding:16px 16px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .prod-tags{ display:flex; gap:6px; flex-wrap:wrap; }
+  .tag{ font-size:10.5px; font-weight:700; background:var(--sage); color:var(--primary-dark); padding:2px 9px; border-radius:999px; letter-spacing:.02em;}
+  .tag.alt{ background:#FBE3D6; color:#9C4A2E; }
+  .prod-name{ font-family:'Kanit'; font-weight:600; font-size:16px; color:var(--ink); }
+  .prod-desc{ font-size:12.5px; color:var(--ink-soft); flex:1; }
+  .prod-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:4px; }
+  .price{ font-family:'Kanit'; font-weight:700; color:var(--accent); font-size:17px; }
+  .add-btn{
+    background:var(--primary); color:#fff; border:none; border-radius:999px; padding:8px 15px;
+    font-weight:600; font-size:13px; transition:.15s;
+  }
+  .add-btn:hover{ background:var(--primary-dark); }
+  .add-btn:disabled{ background:var(--sage-deep); cursor:default; }
+
+  /* ---------- PRODUCTS PAGE ---------- */
+  .products-head{ margin-top:30px; }
+  .search-row{ display:flex; gap:10px; margin-bottom:18px; }
+  .search-row input{
+    flex:1; padding:13px 16px; border-radius:12px; border:1px solid var(--line); font-family:inherit; font-size:15px; background:#fff;
+  }
+  .filter-panel{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; margin-bottom:24px;
+  }
+  .filter-panel h3{ font-size:15px; color:var(--primary-dark); margin-bottom:4px; }
+  .filter-panel .hint{ font-size:12.5px; color:var(--ink-soft); margin-bottom:14px; }
+  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
   .chip{
-    background:var(--paper); border:1.5px solid var(--line); color:var(--ink);
-    padding:9px 16px; border-radius:20px; font-size:.88rem; font-weight:600; cursor:pointer;
-    transition:.15s;
+    border:1.5px solid var(--line); background:#fff; color:var(--ink); border-radius:999px;
+    padding:7px 15px; font-size:13.5px; font-weight:600; transition:.15s;
   }
-  .chip:hover{border-color:var(--amber);}
-  .chip.selected{background:var(--amber); border-color:var(--amber); color:#fff;}
-  .chip .count{opacity:.65; font-weight:500; margin-left:4px;}
-
-  /* ---------- PRODUCT CARD ---------- */
-  .grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:18px;}
-  .card{
-    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
-    overflow:hidden; display:flex; flex-direction:column; transition:.18s transform, .18s box-shadow;
+  .chip.is-on{ background:var(--primary); border-color:var(--primary); color:#fff; }
+  .op-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; border-top:1px dashed var(--line); padding-top:16px; }
+  .op-row .lbl{ font-size:13px; font-weight:700; color:var(--primary-dark); }
+  .op-btn{
+    display:flex; align-items:center; gap:8px; border:1.5px solid var(--line); background:#fff;
+    padding:7px 14px 7px 10px; border-radius:12px; font-size:13.5px; font-weight:600;
   }
-  .card:hover{transform:translateY(-3px); box-shadow:0 10px 22px rgba(35,35,31,.1);}
-  .thumb{
-    height:120px; display:flex; align-items:center; justify-content:center; font-size:3rem;
-    position:relative;
-  }
-  .thumb .badge{
-    position:absolute; top:8px; left:8px; background:var(--coral); color:#fff;
-    font-size:.64rem; font-weight:700; padding:3px 8px; border-radius:20px; text-transform:uppercase; letter-spacing:.04em;
-  }
-  .cardBody{padding:14px 14px 16px; display:flex; flex-direction:column; gap:6px; flex:1;}
-  .cardBody h3{font-size:1rem; font-weight:600; font-family:'Work Sans';}
-  .tags{display:flex; gap:5px; flex-wrap:wrap; margin:2px 0 4px;}
-  .tags span{
-    font-size:.68rem; background:var(--paper); color:#5a5344; padding:2px 8px; border-radius:20px; font-weight:600;
-  }
-  .desc{font-size:.8rem; color:#23231fa0; flex:1;}
-  .cardFoot{display:flex; align-items:center; justify-content:space-between; margin-top:8px;}
-  .price{font-weight:700; font-family:'Fraunces'; font-size:1.1rem; color:var(--fern);}
-  .addBtn{
-    background:var(--ink); color:#fff; border:none; padding:8px 13px; border-radius:20px;
-    font-size:.8rem; font-weight:600; cursor:pointer;
-  }
-  .addBtn.inCart{background:var(--fern);}
-  .addBtn:disabled{opacity:.6; cursor:default;}
-
-  /* ---------- FILTER PANEL (products page) ---------- */
-  .filterWrap{
-    display:grid; grid-template-columns:260px 1fr; gap:24px; align-items:start;
-  }
-  @media(max-width:760px){.filterWrap{grid-template-columns:1fr;}}
-  .filterPanel{
-    background:var(--paper); border-radius:var(--radius); padding:18px; position:sticky; top:80px;
-  }
-  .filterGroup{margin-bottom:16px;}
-  .filterGroup h4{font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:#5a5344; margin-bottom:8px;}
-  .filterOpt{display:flex; align-items:center; gap:8px; padding:5px 0; font-size:.88rem; cursor:pointer;}
-  .filterOpt input{accent-color:var(--fern); width:15px; height:15px;}
-  .modeRow{display:flex; gap:6px; background:#fff; border-radius:20px; padding:3px; margin-bottom:14px;}
-  .modeRow button{
-    flex:1; border:none; background:transparent; padding:7px 4px; font-size:.76rem; font-weight:700;
-    border-radius:20px; cursor:pointer; color:var(--ink);
-  }
-  .modeRow button.active{background:var(--fern); color:#fff;}
-  .resultBar{font-size:.85rem; color:#23231f88; margin-bottom:12px;}
-  .resultBar b{color:var(--ink);}
-  .setExpr{
-    font-family:monospace; background:#fff; border:1px dashed var(--line); border-radius:10px;
-    padding:10px 12px; font-size:.78rem; margin-bottom:12px; color:var(--fern-light);
-  }
-
-  /* mini venn */
-  .venn{display:flex; justify-content:center; margin:6px 0 4px;}
+  .op-btn.is-on{ border-color:var(--accent); background:#FFF1EC; color:#9C4A2E; }
+  .op-btn svg{ width:26px; height:20px; }
+  .result-line{ font-size:13px; color:var(--ink-soft); margin:6px 0 16px; }
+  .result-line b{ color:var(--primary-dark); }
 
   /* ---------- CHECKOUT ---------- */
-  .checkoutGrid{display:grid; grid-template-columns:1.5fr 1fr; gap:24px; align-items:start;}
-  @media(max-width:760px){.checkoutGrid{grid-template-columns:1fr;}}
-  .cartLine{
-    display:flex; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--line);
+  .checkout-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:26px; margin-top:28px; align-items:start; }
+  .cart-item{
+    display:flex; gap:14px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:12px;
   }
-  .cartLine .thumbSm{width:52px; height:52px; border-radius:10px; background:var(--paper); display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;}
-  .cartLine .info{flex:1;}
-  .cartLine .info h4{font-size:.92rem; font-weight:600;}
-  .cartLine .info .p{font-size:.78rem; color:#23231f88;}
-  .qtyBox{display:flex; align-items:center; gap:8px;}
-  .qtyBox button{
-    width:26px; height:26px; border-radius:50%; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700;
-  }
-  .removeX{background:none; border:none; color:var(--coral); font-size:.78rem; cursor:pointer; font-weight:600;}
-  .summaryBox{background:var(--ink); color:var(--cream); border-radius:var(--radius); padding:22px;}
-  .summaryBox h3{font-size:1.05rem; margin-bottom:14px;}
-  .sumRow{display:flex; justify-content:space-between; font-size:.88rem; padding:6px 0; opacity:.9;}
-  .sumRow.total{border-top:1px solid #ffffff2a; margin-top:8px; padding-top:12px; font-size:1.1rem; font-weight:700; opacity:1; font-family:'Fraunces';}
-  .promoNote{
-    background:#ffffff14; border-radius:10px; padding:10px 12px; font-size:.78rem; margin:12px 0; line-height:1.5;
-  }
-  .memberRow{display:flex; align-items:center; gap:8px; font-size:.85rem; margin:10px 0;}
-  .checkoutBtn{
-    width:100%; background:var(--amber); color:var(--ink); border:none; padding:12px; border-radius:20px;
-    font-weight:700; margin-top:8px; cursor:pointer; font-size:.95rem;
-  }
-  .emptyState{text-align:center; padding:50px 20px; color:#23231f88;}
-  .emptyState .big{font-size:2.6rem; margin-bottom:10px;}
+  .cart-item .art-wrap{ width:78px; height:78px; border-radius:12px; flex-shrink:0; }
+  .cart-item .art-icon{ width:52%; }
+  .ci-body{ flex:1; display:flex; flex-direction:column; gap:4px; }
+  .ci-top{ display:flex; justify-content:space-between; gap:8px; }
+  .ci-name{ font-weight:600; font-size:14.5px; }
+  .ci-remove{ background:none; border:none; color:var(--ink-soft); font-size:12px; text-decoration:underline; padding:0; }
+  .qty-row{ display:flex; align-items:center; gap:10px; margin-top:4px; }
+  .qty-btn{ width:26px; height:26px; border-radius:8px; border:1px solid var(--line); background:#fff; font-weight:700; }
+  .qty-num{ font-weight:600; min-width:16px; text-align:center; }
+  .ci-price{ font-family:'Kanit'; color:var(--accent); font-weight:700; }
+  .empty-note{ background:var(--card); border:1px dashed var(--line); border-radius:16px; padding:34px; text-align:center; color:var(--ink-soft); }
 
-  .footNote{
-    margin-top:40px; font-size:.72rem; color:#23231f66; text-align:center; line-height:1.7;
+  .summary{ background:var(--primary); color:#fff; border-radius:20px; padding:24px; position:sticky; top:92px; }
+  .summary h3{ font-family:'Kanit'; font-size:18px; margin-bottom:14px; }
+  .sum-row{ display:flex; justify-content:space-between; font-size:14px; padding:7px 0; color:#DCEAE4; }
+  .sum-row.total{ border-top:1px solid rgba(255,255,255,.25); margin-top:8px; padding-top:14px; font-size:18px; font-weight:700; color:#fff; font-family:'Kanit'; }
+  .promo{
+    display:flex; gap:8px; align-items:flex-start; background:rgba(255,255,255,.1); border-radius:12px; padding:10px 12px; margin-top:10px; font-size:12.5px; line-height:1.5;
   }
-  code.k{background:var(--ink); color:var(--cream); padding:1px 6px; border-radius:5px; font-size:.72rem;}
+  .promo.on{ background:rgba(244,162,97,.22); border:1px solid var(--warm); }
+  .promo .dot{ width:7px; height:7px; border-radius:50%; margin-top:5px; flex-shrink:0; background:rgba(255,255,255,.4); }
+  .promo.on .dot{ background:var(--warm); }
+  .checkout-btn{
+    width:100%; margin-top:16px; background:var(--warm); color:var(--primary-dark); border:none; border-radius:12px;
+    padding:14px; font-weight:700; font-size:15px; font-family:'Kanit';
+  }
+  .nudge{ font-size:12px; margin-top:10px; color:#F6D9BF; }
+
+  .reco-title{ font-size:15px; font-weight:700; color:var(--primary-dark); margin:36px 0 12px; }
+  .reco-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .reco-card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:10px; text-align:center; }
+  .reco-card .art-wrap{ width:100%; aspect-ratio:1; border-radius:10px; margin-bottom:8px; }
+  .reco-card .n{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
+  .reco-card .p{ font-size:12.5px; color:var(--accent); font-weight:700; font-family:'Kanit'; margin-bottom:8px; }
+  .reco-card button{ width:100%; background:var(--sage); border:none; border-radius:8px; padding:6px; font-size:12px; font-weight:700; color:var(--primary-dark); }
+
+  footer{ text-align:center; padding:30px 20px; color:var(--ink-soft); font-size:12.5px; }
+
+  @media (max-width:880px){
+    .hero{ grid-template-columns:1fr; padding:32px 22px; }
+    .cat-grid{ grid-template-columns:repeat(2,1fr); }
+    .prod-grid{ grid-template-columns:repeat(2,1fr); }
+    .checkout-grid{ grid-template-columns:1fr; }
+    .reco-grid{ grid-template-columns:repeat(2,1fr); }
+    nav{ display:none; }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="headerRow">
-    <div class="logo">🐟 Whisker & Bowl <span class="tag">Cat Kitchen</span></div>
+  <div class="nav-wrap">
+    <div class="brand">
+      <svg class="paw" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="40" r="15" fill="#F4A261"/><circle cx="14" cy="24" r="8" fill="#F4A261"/><circle cx="50" cy="24" r="8" fill="#F4A261"/><circle cx="24" cy="12" r="7" fill="#F4A261"/><circle cx="40" cy="12" r="7" fill="#F4A261"/></svg>
+      <div class="brand-text">แมวอิ่ม MEOWFULL<small>CAT FOOD & SUPPLY</small></div>
+    </div>
     <nav id="nav">
-      <button data-page="home">หน้าแรก</button>
-      <button data-page="products">สินค้าทั้งหมด</button>
-      <button data-page="checkout">ตะกร้า</button>
+      <button class="nav-btn" data-page="home">หน้าแรก</button>
+      <button class="nav-btn" data-page="products">สินค้าทั้งหมด</button>
+      <button class="nav-btn" data-page="checkout">ตะกร้า</button>
     </nav>
-    <button class="cartBtn" onclick="goTo('checkout')">
-      🛒 ตะกร้า <span class="cartBadge" id="cartBadge">0</span>
+    <button class="cart-pill" data-page="checkout" id="cartPill">
+      🛒 ตะกร้าของฉัน <b id="cartCount">0</b>
     </button>
   </div>
 </header>
@@ -221,473 +236,540 @@
 <main>
 
   <!-- ============ PAGE 1: HOME ============ -->
-  <section class="page" id="page-home">
+  <section class="page is-active" id="page-home">
     <div class="hero">
-      <div class="eyebrow">Whisker & Bowl</div>
-      <h1>อาหารแมวคัดสรร เพื่อแมวทุกวัย ทุกไลฟ์สไตล์</h1>
-      <p>ตั้งแต่ลูกแมวจอมซน ไปจนถึงคุณปู่เหมียวสูงวัย เรามีเมนูที่ใช่ให้เลือกครบ ไม่ว่าจะเปียก แห้ง หรือขนม</p>
+      <div>
+        <p class="eyebrow" style="color:var(--warm)">ร้านอาหารแมวออนไลน์</p>
+        <h1>ของอร่อยที่แมวคุณ<span>รัก</span> ในที่เดียว</h1>
+        <p>คัดสรรอาหารเปียก อาหารแห้ง ขนม และของเล่น สำหรับน้องแมวทุกวัย พร้อมระบบกรองสินค้าอัจฉริยะที่ช่วยหาสิ่งที่ใช่ให้แมวคุณได้เร็วขึ้น</p>
+        <div class="hero-stats" id="heroStats"></div>
+      </div>
+      <div class="hero-img" id="heroArt"></div>
     </div>
 
     <section class="block">
-      <div class="blockHead">
-        <h2>หมวดหมู่สินค้า</h2>
-        <span class="muted">สร้างจาก <code class="k">new Set()</code> ของหมวดสินค้าทั้งหมด — ไม่มีชื่อซ้ำ</span>
+      <div class="block-head">
+        <div>
+          <p class="eyebrow">จัดกลุ่มด้วย Set</p>
+          <h2>หมวดหมู่สินค้า</h2>
+          <p>ระบบดึงหมวดหมู่ทั้งหมดมาจาก <code>new Set()</code> เพื่อไม่ให้ชื่อหมวดซ้ำกัน แล้วใช้ <code>.size</code> นับจำนวนหมวดที่มีจริง</p>
+        </div>
       </div>
-      <div class="chipRow" id="categoryChips"></div>
+      <div class="cat-grid" id="categoryGrid"></div>
     </section>
 
     <section class="block">
-      <div class="blockHead">
-        <h2>สินค้าแนะนำ 🏆</h2>
-        <span class="muted">คัดจากเงื่อนไข <code class="k">if–else</code>: ขายดี && มีของในสต๊อก</span>
+      <div class="block-head">
+        <div>
+          <p class="eyebrow">สินค้าแนะนำ</p>
+          <h2>สินค้าขายดีประจำสัปดาห์</h2>
+        </div>
+        <button class="nav-btn" style="background:var(--sage);color:var(--primary-dark)" data-page="products">ดูสินค้าทั้งหมด →</button>
       </div>
-      <div class="grid" id="featuredGrid"></div>
+      <div class="prod-grid" id="featuredGrid"></div>
     </section>
   </section>
 
   <!-- ============ PAGE 2: PRODUCTS ============ -->
   <section class="page" id="page-products">
-    <h1 style="font-size:1.7rem; margin-bottom:4px;">สินค้าทั้งหมด</h1>
-    <p class="muted" style="margin-bottom:20px; color:#23231f88;">กรองสินค้าด้วยหลักการ Set: Union (หรือ) · Intersection (และ) · Difference (ยกเว้น)</p>
+    <div class="products-head">
+      <p class="eyebrow" style="margin-top:26px">สินค้าทั้งหมด</p>
+      <h2 style="font-size:26px;color:var(--primary-dark)">ค้นหาและกรองสินค้า</h2>
+    </div>
 
-    <div class="filterWrap">
-      <aside class="filterPanel">
-        <div class="modeRow">
-          <button id="modeAND" class="active" onclick="setMode('AND')">AND (∩)</button>
-          <button id="modeOR" onclick="setMode('OR')">OR (∪)</button>
-        </div>
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="ค้นหาชื่อสินค้า เช่น แซลมอน, ทูน่า, คิตเท่น...">
+    </div>
 
-        <div class="filterGroup">
-          <h4>ประเภทอาหาร</h4>
-          <div id="grp-category"></div>
-        </div>
-        <div class="filterGroup">
-          <h4>ช่วงวัย</h4>
-          <div id="grp-life"></div>
-        </div>
-        <div class="filterGroup">
-          <h4>รสชาติ</h4>
-          <div id="grp-flavor"></div>
-        </div>
-        <div class="filterGroup">
-          <h4>ยกเว้น (Difference: A − B)</h4>
-          <div id="grp-exclude"></div>
-        </div>
-
-        <button class="addBtn" style="width:100%; background:var(--coral);" onclick="clearFilters()">ล้างตัวกรองทั้งหมด</button>
-      </aside>
-
-      <div>
-        <div class="resultBar" id="resultBar"></div>
-        <div class="setExpr" id="setExpr"></div>
-        <div class="grid" id="productsGrid"></div>
+    <div class="filter-panel">
+      <h3>กรองด้วยแท็ก (Operation of Set)</h3>
+      <p class="hint">เลือกแท็กตั้งแต่ 2 อันขึ้นไป แล้วเลือกวิธีรวมชุดข้อมูล — ระบบจะคำนวณด้วย Union / Intersection / Difference จริง ๆ ไม่ใช่แค่ตัวกรองธรรมดา</p>
+      <div class="chip-row" id="tagChips"></div>
+      <div class="op-row">
+        <span class="lbl">รวมชุดด้วย:</span>
+        <button class="op-btn is-on" data-op="union">
+          <svg viewBox="0 0 26 20"><circle cx="10" cy="10" r="8" fill="#E76F51" fill-opacity=".55"/><circle cx="17" cy="10" r="8" fill="#1B4B43" fill-opacity=".55"/></svg>
+          Union (หรือ)
+        </button>
+        <button class="op-btn" data-op="intersect">
+          <svg viewBox="0 0 26 20"><circle cx="10" cy="10" r="8" fill="none" stroke="#E76F51" stroke-width="1.5"/><circle cx="17" cy="10" r="8" fill="none" stroke="#1B4B43" stroke-width="1.5"/><clipPath id="clipI"><circle cx="10" cy="10" r="8"/></clipPath><circle cx="17" cy="10" r="8" fill="#7FAE8E" clip-path="url(#clipI)"/></svg>
+          Intersection (และ)
+        </button>
+        <button class="op-btn" data-op="difference">
+          <svg viewBox="0 0 26 20"><circle cx="17" cy="10" r="8" fill="none" stroke="#1B4B43" stroke-width="1.5"/><clipPath id="clipD"><circle cx="10" cy="10" r="8"/></clipPath><circle cx="10" cy="10" r="8" fill="#E76F51" fill-opacity=".65"/><circle cx="17" cy="10" r="8" fill="#fff" clip-path="url(#clipD)"/></svg>
+          Difference (แต่ไม่ใช่)
+        </button>
+        <button class="chip" id="clearFilters" style="margin-left:auto;">ล้างตัวกรอง</button>
       </div>
     </div>
+
+    <p class="result-line" id="resultLine"></p>
+    <div class="prod-grid" id="productsGrid"></div>
   </section>
 
   <!-- ============ PAGE 3: CHECKOUT ============ -->
   <section class="page" id="page-checkout">
-    <h1 style="font-size:1.7rem; margin-bottom:20px;">ตะกร้าสินค้า / สรุปคำสั่งซื้อ</h1>
+    <p class="eyebrow" style="margin-top:26px">สรุปคำสั่งซื้อ</p>
+    <h2 style="font-size:26px;color:var(--primary-dark)">ตะกร้าสินค้า</h2>
 
-    <div class="checkoutGrid">
+    <div class="checkout-grid">
       <div>
         <div id="cartList"></div>
-
-        <section class="block" id="recoBlock" style="margin-top:30px;">
-          <div class="blockHead">
-            <h2>แมวตัวนี้น่าจะชอบด้วย 🐾</h2>
-            <span class="muted">สินค้าที่แท็กเกี่ยวข้องกับตะกร้า แต่ยัง<u>ไม่ซ้ำ</u>กับของในตะกร้า (Set Difference)</span>
-          </div>
-          <div class="grid" id="recoGrid"></div>
-        </section>
       </div>
+      <div class="summary">
+        <h3>สรุปยอดชำระ</h3>
+        <div class="sum-row"><span>ราคาสินค้า (<span id="itemCount">0</span> ชิ้น)</span><span id="subtotal">฿0</span></div>
+        <div class="sum-row"><span>ส่วนลด</span><span id="discountLine">-฿0</span></div>
+        <div class="sum-row"><span>ค่าจัดส่ง</span><span id="shipLine">฿0</span></div>
+        <div class="sum-row total"><span>ยอดสุทธิ</span><span id="grandTotal">฿0</span></div>
 
-      <div class="summaryBox">
-        <h3>สรุปยอด</h3>
-        <div class="sumRow"><span>ยอดรวมสินค้า</span><span id="sumSubtotal">฿0</span></div>
-        <div class="sumRow"><span id="discountLabel">ส่วนลด</span><span id="sumDiscount">−฿0</span></div>
-        <div class="sumRow"><span>ค่าจัดส่ง</span><span id="sumShip">฿0</span></div>
-        <div class="sumRow total"><span>ยอดสุทธิ</span><span id="sumTotal">฿0</span></div>
-
-        <div class="memberRow">
-          <input type="checkbox" id="memberCheck" onchange="renderCheckout()" style="accent-color:var(--amber); width:16px; height:16px;">
-          <label for="memberCheck">เป็นสมาชิก Whisker Club (ส่งฟรีทันที)</label>
-        </div>
-
-        <div class="promoNote" id="promoNote"></div>
-
-        <button class="checkoutBtn" onclick="placeOrder()">ยืนยันคำสั่งซื้อ</button>
+        <div id="promoBox"></div>
+        <button class="checkout-btn">ยืนยันคำสั่งซื้อ</button>
+        <div class="nudge" id="wetNudge" style="display:none">🐟 เมนูนี้ยังไม่มีอาหารเปียกเลย ลองเพิ่มดูไหม แมวจะได้น้ำเยอะขึ้น</div>
       </div>
     </div>
+
+    <div class="reco-title" id="recoTitle">สินค้าที่คุณอาจสนใจเพิ่มเติม (มาจาก Set Difference — หมวดใกล้เคียงตะกร้า แต่ยังไม่มีในตะกร้า)</div>
+    <div class="reco-grid" id="recoGrid"></div>
   </section>
 
 </main>
 
-<p class="footNote">
-  Demo เพื่อการศึกษา หลักการดิสครีต: Set (union / intersection / difference), Logic (if–else, && || !),<br>
-  ใช้ JavaScript: new Set() · add() · has() · size · filter() · includes() · some() · reduce() · localStorage
-</p>
+<footer>© 2026 แมวอิ่ม MEOWFULL — โปรเจกต์สาธิตหลักการดิสครีต (Set & Logic) บนเว็บไซต์ร้านอาหารแมว</footer>
 
 <script>
-/* ======================================================================
-   DATA — สินค้าอาหารแมวทั้งหมด
-   tags[] คือ "สมาชิกของเซต" แต่ละสินค้าอาจอยู่ได้หลายเซตพร้อมกัน
-   ====================================================================== */
+/* =========================================================================
+   1) STORAGE — mimics window.localStorage's getItem/setItem/removeItem API.
+   (In a real deployment this object would simply BE window.localStorage;
+   it's swapped for an in-memory store here because this preview sandbox
+   does not allow real browser storage.)
+   ========================================================================= */
+const storage = (() => {
+  const mem = {};
+  return {
+    getItem: k => (k in mem ? mem[k] : null),
+    setItem: (k, v) => { mem[k] = v; },
+    removeItem: k => { delete mem[k]; }
+  };
+})();
+
+/* =========================================================================
+   2) PRODUCT ART — drawn with inline SVG instead of hotlinked photos.
+   Guarantees every image renders crisply with no network dependency,
+   and keeps every product visually tied to its category.
+   ========================================================================= */
+const CATEGORY_TINT = {
+  Dry:    'linear-gradient(150deg,#E9C08A,#C97A3B)',
+  Wet:    'linear-gradient(150deg,#7FAE8E,#1B4B43)',
+  Treats: 'linear-gradient(150deg,#F1A6A0,#E76F51)',
+  Toy:    'linear-gradient(150deg,#93B8E0,#3E6FA6)'
+};
+const CATEGORY_ICON = {
+  Dry: `<g fill="#fff"><path d="M38 6 h24 v14 h-24 z" opacity=".95"/>
+          <path d="M28 20 h44 l4 12 -4 58 a6 6 0 0 1 -6 6 h-32 a6 6 0 0 1 -6 -6 l-4 -58 z" opacity=".95"/>
+        </g>
+        <circle cx="50" cy="58" r="17" fill="none" stroke="#7A3E12" stroke-width="3"/>
+        <circle cx="43" cy="54" r="3.4" fill="#7A3E12"/><circle cx="58" cy="52" r="3" fill="#7A3E12"/>
+        <circle cx="50" cy="64" r="3.2" fill="#7A3E12"/><circle cx="59" cy="63" r="2.6" fill="#7A3E12"/>`,
+  Wet: `<ellipse cx="50" cy="26" rx="22" ry="7" fill="#fff" opacity=".95"/>
+        <path d="M28 26 h44 v50 a6 6 0 0 1 -6 6 h-32 a6 6 0 0 1 -6 -6 z" fill="#fff" opacity=".95"/>
+        <ellipse cx="50" cy="26" rx="22" ry="7" fill="none" stroke="#12362F" stroke-width="2.5"/>
+        <rect x="28" y="46" width="44" height="18" fill="#12362F" opacity=".88"/>
+        <path d="M34 55 q4 -7 8 0 q4 -7 8 0 q4 -7 8 0 q4 -7 8 0" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>`,
+  Treats: `<circle cx="30" cy="42" r="9" fill="#fff" opacity=".95"/><circle cx="30" cy="64" r="9" fill="#fff" opacity=".95"/>
+        <circle cx="70" cy="42" r="9" fill="#fff" opacity=".95"/><circle cx="70" cy="64" r="9" fill="#fff" opacity=".95"/>
+        <rect x="30" y="45" width="40" height="16" rx="8" fill="#fff" opacity=".95"/>`,
+  Toy: `<circle cx="70" cy="24" r="9" fill="#fff" opacity=".95"/>
+        <path d="M26 78 C 36 60, 48 48, 66 28" stroke="#fff" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <path d="M64 30 q10 -4 16 -18 q-15 1 -20 12 q-3 7 4 6 Z" fill="#fff" opacity=".9"/>`
+};
+function productArtHTML(category){
+  return `<div class="art-wrap" style="background:${CATEGORY_TINT[category]}">
+            <svg class="art-icon" viewBox="0 0 100 100">${CATEGORY_ICON[category]}</svg>
+          </div>`;
+}
+
+/* =========================================================================
+   3) PRODUCT DATA
+   ========================================================================= */
 const PRODUCTS = [
-  { id:'p01', name:'Whiskas Adult ไก่ย่าง', category:'Dry Food', tags:['Dry Food','Adult','Chicken'], price:350, img:'🍗', desc:'อาหารเม็ดสูตรไก่ย่าง สำหรับแมวโตเต็มวัย เม็ดกรอบช่วยลดคราบหินปูน', bestseller:true, stock:true },
-  { id:'p02', name:'Me-O Kitten สูตรลูกแมว', category:'Dry Food', tags:['Dry Food','Kitten','Chicken'], price:280, img:'🍗', desc:'โปรตีนสูง เสริมดีเอชเอเพื่อพัฒนาการสมองลูกแมวช่วง 2-12 เดือน', bestseller:true, stock:true },
-  { id:'p03', name:'Royal Canin Senior Care', category:'Dry Food', tags:['Dry Food','Senior','Grain-Free'], price:890, img:'👵', desc:'สูตรไม่มีธัญพืช ย่อยง่าย เหมาะกับแมวสูงวัย 7 ปีขึ้นไป', bestseller:false, stock:true },
-  { id:'p04', name:'Sheba เพาช์ทูน่า', category:'Wet Food', tags:['Wet Food','Adult','Fish'], price:45, img:'🐟', desc:'เนื้อทูน่าแท้ในเกรวี่นุ่มๆ แมวโตชอบเป็นพิเศษ', bestseller:true, stock:true },
-  { id:'p05', name:'Friskies เพาช์แซลมอน', category:'Wet Food', tags:['Wet Food','Adult','Fish'], price:38, img:'🐟', desc:'แซลมอนในซอสเข้มข้น ให้ความชุ่มชื้นสูง', bestseller:false, stock:true },
-  { id:'p06', name:'Purina Kitten เพาช์ไก่', category:'Wet Food', tags:['Wet Food','Kitten','Chicken'], price:42, img:'🍗', desc:'เนื้อสัมผัสละเอียด เหมาะกับลูกแมวเริ่มหย่านม', bestseller:false, stock:true },
-  { id:'p07', name:'Temptations ขนมไก่กรอบ', category:'Treats', tags:['Treats','Adult','Chicken'], price:65, img:'🍪', desc:'ขนมแมวเคี้ยวกรอบ ไส้นุ่ม ให้เป็นรางวัลระหว่างวัน', bestseller:true, stock:true },
-  { id:'p08', name:'Churu ซุปทูน่า', category:'Treats', tags:['Treats','Adult','Fish'], price:55, img:'🥫', desc:'ครีมกินง่าย ให้เปล่าๆ หรือบีบผสมอาหารเม็ดก็ได้', bestseller:true, stock:true },
-  { id:'p09', name:'Orijen Grain-Free สูตรเข้ม', category:'Dry Food', tags:['Dry Food','Adult','Grain-Free'], price:1200, img:'🥩', desc:'โปรตีนจากเนื้อสัตว์ 85% ไม่มีธัญพืช สูตรใกล้เคียงธรรมชาติ', bestseller:false, stock:true },
-  { id:'p10', name:"Hill's Senior เพาช์ปลา", category:'Wet Food', tags:['Wet Food','Senior','Fish'], price:58, img:'🐟', desc:'ดูแลไต บำรุงข้อต่อ เหมาะกับแมวสูงวัยที่มีน้ำหนักเกิน', bestseller:false, stock:true },
-  { id:'p11', name:'Applaws Grain-Free ลูกแมว', category:'Dry Food', tags:['Dry Food','Kitten','Grain-Free'], price:650, img:'🐾', desc:'ปลาแท้ 75% ไม่ผสมธัญพืช เหมาะกับลูกแมวท้องไว', bestseller:false, stock:true },
-  { id:'p12', name:'Iams Adult สูตรแซลมอน', category:'Dry Food', tags:['Dry Food','Adult','Fish'], price:420, img:'🐟', desc:'โอเมก้า 3-6 บำรุงขนเงางาม ลดการหลุดร่วง', bestseller:false, stock:true },
+  { id:'P001', name:'โฮลซัน แซลมอน สูตรโตเต็มวัย', category:'Dry', tags:['Dry','Adult','GrainFree'],
+    price:590, desc:'อาหารแห้งแซลมอนแท้ 32% โปรตีนสูง ไม่มีธัญพืช เหมาะแมวโตที่แพ้ง่าย' },
+  { id:'P002', name:'โฮลซัน ไก่ & ข้าว สูตรโตเต็มวัย', category:'Dry', tags:['Dry','Adult'],
+    price:450, desc:'สูตรไก่และข้าวย่อยง่าย คุมน้ำหนัก เหมาะแมวโตทั่วไป' },
+  { id:'P003', name:'โฮลซัน คิตเท่น สตาร์ทเตอร์', category:'Dry', tags:['Dry','Kitten','GrainFree'],
+    price:520, desc:'เม็ดเล็กพิเศษสำหรับลูกแมว 2–12 เดือน เสริม DHA และแคลเซียม' },
+  { id:'P004', name:'เพียวร์แคท ปลาทูน่าพาเต้', category:'Wet', tags:['Wet','Adult'],
+    price:35, desc:'พาเต้เนื้อทูน่าล้วน เนื้อเนียนละเอียด ไม่ใส่สารกันบูด' },
+  { id:'P005', name:'เพียวร์แคท เนื้อไก่ฝอยในเยลลี่', category:'Wet', tags:['Wet','Adult','GrainFree'],
+    price:38, desc:'เนื้อไก่ฝอยแท้ในเยลลี่ใส เพิ่มความชุ่มน้ำให้แมวทุกมื้อ' },
+  { id:'P006', name:'เพียวร์แคท คิตเท่น มูส', category:'Wet', tags:['Wet','Kitten'],
+    price:40, desc:'เนื้อสัมผัสมูสนุ่มละมุน เหมาะสำหรับลูกแมวเริ่มหย่านม' },
+  { id:'P007', name:'วิสเกอร์ ฟรีซดราย อกไก่ล้วน', category:'Treats', tags:['Treats','GrainFree','Adult'],
+    price:120, desc:'ขนมฟรีซดรายอกไก่ 100% กรอบธรรมชาติ ไม่ผ่านความร้อนสูง' },
+  { id:'P008', name:'วิสเกอร์ ขนมทำความสะอาดฟัน', category:'Treats', tags:['Treats','Adult'],
+    price:95, desc:'แท่งขนมช่วยลดคราบหินปูน กลิ่นปากสดชื่นขึ้นหลังเคี้ยว' },
+  { id:'P009', name:'ไม้ตกแมวขนนก', category:'Toy', tags:['Toy'],
+    price:89, desc:'ของเล่นกระตุ้นสัญชาตญาณล่า ด้ามไม้แข็งแรง ขนนกถอดเปลี่ยนได้' },
 ];
 
-/* ======================================================================
-   STATE
-   ====================================================================== */
+const TAG_LABELS = { Dry:'อาหารแห้ง', Wet:'อาหารเปียก', Treats:'ขนม', Toy:'ของเล่น', Adult:'แมวโต', Kitten:'ลูกแมว', GrainFree:'ไม่มีธัญพืช' };
+const money = n => '฿' + n.toLocaleString('th-TH');
+
+/* =========================================================================
+   4) STATE
+   ========================================================================= */
 let currentPage = 'home';
-// cartMap: Map<productId, quantity> — เก็บลง localStorage เป็น object
-let cartMap = loadCart();
-let filterMode = 'AND'; // 'AND' = Intersection (∩) , 'OR' = Union (∪)
-let selectedTags = new Set();   // แท็กที่ผู้ใช้ติ๊กเลือก (union/intersection)
-let excludedTags = new Set();   // แท็กที่ต้องการ "ยกเว้น" (difference)
+let searchText = '';
+let selectedTags = new Set();              // <-- Set: ผู้ใช้เลือกแท็กได้หลายอัน ไม่ซ้ำกัน
+let setOperation = 'union';                // union | intersect | difference
+let cart = JSON.parse(storage.getItem('meowfull_cart') || '{}'); // { productId: qty }
 
-function loadCart(){
-  const raw = localStorage.getItem('whiskerCart');
-  return raw ? new Map(Object.entries(JSON.parse(raw))) : new Map();
-}
-function saveCart(){
-  localStorage.setItem('whiskerCart', JSON.stringify(Object.fromEntries(cartMap)));
-}
+function saveCart(){ storage.setItem('meowfull_cart', JSON.stringify(cart)); }
 
-/* ======================================================================
-   NAVIGATION  (if–else ตัดสินใจว่าจะ render หน้าไหน)
-   ====================================================================== */
-function goTo(page){
+/* =========================================================================
+   5) NAVIGATION — if/else decides which button is highlighted (Logic)
+   ========================================================================= */
+function goPage(page){
   currentPage = page;
-  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-
-  document.querySelectorAll('#nav button').forEach(b=>{
-    if(b.dataset.page === page){ b.classList.add('active'); }
-    else{ b.classList.remove('active'); }
+  document.querySelectorAll('.page').forEach(el=>{
+    if (el.id === 'page-' + page) el.classList.add('is-active');
+    else el.classList.remove('is-active');
   });
-
-  if(page === 'home') renderHome();
-  else if(page === 'products') renderProducts();
-  else if(page === 'checkout') renderCheckout();
+  document.querySelectorAll('.nav-btn[data-page]').forEach(btn=>{
+    if (btn.dataset.page === page) btn.classList.add('is-active');
+    else btn.classList.remove('is-active');
+  });
+  if (page === 'checkout') renderCheckout();
+  window.scrollTo({top:0, behavior:'smooth'});
 }
-document.querySelectorAll('#nav button').forEach(b=>{
-  b.addEventListener('click', ()=> goTo(b.dataset.page));
+document.querySelectorAll('[data-page]').forEach(el=>{
+  el.addEventListener('click', ()=>goPage(el.dataset.page));
 });
 
-/* ======================================================================
-   CART badge (ใช้ .size ของจำนวนรายการที่ไม่ซ้ำใน cartMap)
-   ====================================================================== */
-function updateCartBadge(){
-  const uniqueItems = new Set(cartMap.keys()); // เซตของ id สินค้าที่อยู่ในตะกร้า (ไม่ซ้ำ)
-  document.getElementById('cartBadge').textContent = uniqueItems.size;
+/* =========================================================================
+   6) HOME PAGE — Set ใช้จัดกลุ่มหมวดหมู่ให้ไม่ซ้ำ
+   ========================================================================= */
+function renderHome(){
+  document.getElementById('heroArt').innerHTML = `
+    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="200" cy="255" rx="120" ry="16" fill="#12362F" opacity=".18"/>
+      <ellipse cx="200" cy="248" rx="78" ry="16" fill="#E76F51"/>
+      <ellipse cx="200" cy="242" rx="78" ry="13" fill="#F4A261"/>
+      <circle cx="176" cy="240" r="5" fill="#7A3E12"/><circle cx="196" cy="244" r="4.4" fill="#7A3E12"/>
+      <circle cx="216" cy="239" r="5" fill="#7A3E12"/><circle cx="228" cy="245" r="3.8" fill="#7A3E12"/>
+      <ellipse cx="200" cy="175" rx="72" ry="58" fill="#fff"/>
+      <path d="M145 130 Q150 95 175 108 Z" fill="#fff"/>
+      <path d="M255 130 Q250 95 225 108 Z" fill="#fff"/>
+      <path d="M150 128 Q154 106 170 114 Z" fill="#F4A261"/>
+      <path d="M250 128 Q246 106 230 114 Z" fill="#F4A261"/>
+      <circle cx="178" cy="168" r="7" fill="#123832"/>
+      <circle cx="222" cy="168" r="7" fill="#123832"/>
+      <path d="M200 182 l-6 8 h12 z" fill="#E76F51"/>
+      <path d="M130 178 h-30 M130 186 h-32 M130 194 h-30" stroke="#12362F" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+      <path d="M270 178 h30 M270 186 h32 M270 194 h30" stroke="#12362F" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+      <path d="M200 190 q0 14 -14 16" stroke="#123832" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>`;
+
+  // new Set(...).size -> จำนวนหมวดหมู่ที่ไม่ซ้ำกันจริง แม้สินค้าจะมีหลายชิ้นในหมวดเดียวกัน
+  const categorySet = new Set(PRODUCTS.map(p => p.category));
+
+  document.getElementById('heroStats').innerHTML = `
+    <div><b>${PRODUCTS.length}</b><span>รายการสินค้า</span></div>
+    <div><b>${categorySet.size}</b><span>หมวดหมู่ (Set.size)</span></div>
+    <div><b>24 ชม.</b><span>จัดส่งไว</span></div>
+  `;
+
+  const catGrid = document.getElementById('categoryGrid');
+  catGrid.innerHTML = '';
+  [...categorySet].forEach(cat=>{
+    // .filter() นับจำนวนสินค้าที่ category ตรงกับหมวดนี้
+    const count = PRODUCTS.filter(p => p.category === cat).length;
+    const card = document.createElement('button');
+    card.className = 'cat-card';
+    card.innerHTML = `<span class="badge">${count} รายการ</span><span class="n">${TAG_LABELS[cat]}</span><span class="c">${cat}</span>`;
+    card.addEventListener('click', ()=>{
+      selectedTags = new Set([cat]);
+      setOperation = 'union';
+      goPage('products');
+      renderProducts();
+    });
+    catGrid.appendChild(card);
+  });
+
+  const featured = document.getElementById('featuredGrid');
+  featured.innerHTML = '';
+  PRODUCTS.slice(0,3).forEach(p => featured.appendChild(productCard(p)));
+}
+
+/* =========================================================================
+   7) PRODUCTS PAGE — Set Operations: Union / Intersection / Difference
+   ========================================================================= */
+const ALL_TAGS = [...new Set(PRODUCTS.flatMap(p => p.tags))]; // flatten แล้วใช้ Set ตัดตัวซ้ำ
+
+function idsWithTag(tag){
+  // คืนค่าเป็น Set ของ id สินค้าที่มีแท็กนี้ (ใช้ .includes() ตรวจใน array ของแต่ละสินค้า)
+  return new Set(PRODUCTS.filter(p => p.tags.includes(tag)).map(p => p.id));
+}
+
+function computeFilteredIds(){
+  const tags = [...selectedTags];
+  if (tags.length === 0) return new Set(PRODUCTS.map(p => p.id)); // ไม่เลือกแท็ก = ทั้งหมด
+
+  let result = idsWithTag(tags[0]);
+  for (let i = 1; i < tags.length; i++){
+    const nextSet = idsWithTag(tags[i]);
+    if (setOperation === 'union'){
+      // UNION: รวมสมาชิกของทั้งสองเซต (ใช้ spread + new Set เพื่อตัดตัวซ้ำ)
+      result = new Set([...result, ...nextSet]);
+    } else if (setOperation === 'intersect'){
+      // INTERSECTION: เหลือเฉพาะ id ที่อยู่ในทั้งสองเซต (.has())
+      result = new Set([...result].filter(id => nextSet.has(id)));
+    } else if (setOperation === 'difference'){
+      // DIFFERENCE: เอาเฉพาะ id ที่อยู่ใน result แต่ "ไม่" อยู่ใน nextSet (!has)
+      result = new Set([...result].filter(id => !nextSet.has(id)));
+    }
+  }
+  return result;
+}
+
+function renderProducts(){
+  // ----- แท็กตัวกรอง -----
+  const chipWrap = document.getElementById('tagChips');
+  chipWrap.innerHTML = '';
+  ALL_TAGS.forEach(tag=>{
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (selectedTags.has(tag) ? ' is-on' : '');
+    chip.textContent = TAG_LABELS[tag] || tag;
+    chip.addEventListener('click', ()=>{
+      if (selectedTags.has(tag)) selectedTags.delete(tag);   // Set.delete()
+      else selectedTags.add(tag);                             // Set.add()
+      renderProducts();
+    });
+    chipWrap.appendChild(chip);
+  });
+
+  document.querySelectorAll('.op-btn').forEach(btn=>{
+    btn.classList.toggle('is-on', btn.dataset.op === setOperation);
+  });
+
+  // ----- คำนวณผลลัพธ์จาก Set operation + คำค้นหา -----
+  const filteredIds = computeFilteredIds();
+  const q = searchText.trim().toLowerCase();
+
+  const results = PRODUCTS.filter(p=>{
+    const inSet = filteredIds.has(p.id);
+    // some(): เช็คว่ามีอย่างน้อยหนึ่งคำในชื่อ/แท็กที่ตรงกับคำค้นหาหรือไม่
+    const matchesSearch = q === '' ||
+      p.name.toLowerCase().includes(q) ||
+      p.tags.some(t => t.toLowerCase().includes(q) || (TAG_LABELS[t]||'').includes(q));
+    return inSet && matchesSearch;
+  });
+
+  const opLabel = { union:'Union (หรือ)', intersect:'Intersection (และ)', difference:'Difference (แต่ไม่ใช่)' }[setOperation];
+  document.getElementById('resultLine').innerHTML =
+    selectedTags.size > 0
+      ? `พบ <b>${results.length}</b> รายการ จากแท็ก <b>${[...selectedTags].map(t=>TAG_LABELS[t]).join(' , ')}</b> ด้วยวิธี <b>${opLabel}</b>`
+      : `พบ <b>${results.length}</b> รายการทั้งหมด — เลือกแท็กด้านบนเพื่อกรองด้วย Set`;
+
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+  if (results.length === 0){
+    grid.innerHTML = `<div class="empty-note" style="grid-column:1/-1">ไม่พบสินค้าที่ตรงเงื่อนไข ลองเปลี่ยนแท็กหรือวิธีรวมชุดดูนะ</div>`;
+  } else {
+    results.forEach(p => grid.appendChild(productCard(p)));
+  }
+}
+
+document.getElementById('searchInput').addEventListener('input', e=>{
+  searchText = e.target.value;
+  renderProducts();
+});
+document.querySelectorAll('.op-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{ setOperation = btn.dataset.op; renderProducts(); });
+});
+document.getElementById('clearFilters').addEventListener('click', ()=>{
+  selectedTags = new Set(); setOperation = 'union'; searchText=''; document.getElementById('searchInput').value='';
+  renderProducts();
+});
+
+/* =========================================================================
+   8) SHARED PRODUCT CARD
+   ========================================================================= */
+function productCard(p){
+  const card = document.createElement('div');
+  card.className = 'prod-card';
+  card.innerHTML = `
+    <div class="prod-img">${productArtHTML(p.category)}</div>
+    <div class="prod-body">
+      <div class="prod-tags">${p.tags.map(t=>`<span class="tag${t==='GrainFree'?' alt':''}">${TAG_LABELS[t]||t}</span>`).join('')}</div>
+      <div class="prod-name">${p.name}</div>
+      <div class="prod-desc">${p.desc}</div>
+      <div class="prod-foot">
+        <span class="price">${money(p.price)}</span>
+        <button class="add-btn" data-add="${p.id}">+ ใส่ตะกร้า</button>
+      </div>
+    </div>
+  `;
+  card.querySelector('[data-add]').addEventListener('click', ()=>addToCart(p.id));
+  return card;
 }
 
 function addToCart(id){
-  const current = cartMap.get(id) || 0;
-  cartMap.set(id, current + 1);
+  cart[id] = (cart[id] || 0) + 1;
   saveCart();
-  updateCartBadge();
-  if(currentPage === 'home') renderHome();
-  if(currentPage === 'products') renderProducts();
-  if(currentPage === 'checkout') renderCheckout();
+  updateCartCount();
+  const btn = document.querySelector(`[data-add="${id}"]`);
+  if (btn){ const old = btn.textContent; btn.textContent = 'เพิ่มแล้ว ✓'; btn.disabled = true;
+    setTimeout(()=>{ btn.textContent = old; btn.disabled = false; }, 700); }
 }
-function changeQty(id, delta){
-  const q = (cartMap.get(id)||0) + delta;
-  if(q <= 0){ cartMap.delete(id); } else { cartMap.set(id, q); }
-  saveCart(); updateCartBadge(); renderCheckout();
-}
-function removeFromCart(id){
-  cartMap.delete(id);
-  saveCart(); updateCartBadge(); renderCheckout();
+function updateCartCount(){
+  const count = Object.values(cart).reduce((sum,q)=>sum+q, 0); // reduce(): รวมจำนวนชิ้นทั้งหมด
+  document.getElementById('cartCount').textContent = count;
 }
 
-/* ======================================================================
-   CARD BUILDER (ใช้ร่วมกันทุกหน้า)
-   ====================================================================== */
-function productCard(p){
-  const inCart = cartMap.has(p.id); // Set/Map .has() ตรวจสมาชิก
-  return `
-    <div class="card">
-      <div class="thumb" style="background:${thumbColor(p.category)}">
-        ${p.bestseller ? '<span class="badge">ขายดี</span>' : ''}
-        ${p.img}
-      </div>
-      <div class="cardBody">
-        <h3>${p.name}</h3>
-        <div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-        <div class="desc">${p.desc}</div>
-        <div class="cardFoot">
-          <div class="price">฿${p.price.toLocaleString()}</div>
-          <button class="addBtn ${inCart?'inCart':''}" onclick="addToCart('${p.id}')">
-            ${inCart ? '✓ ในตะกร้า' : '+ เพิ่ม'}
-          </button>
-        </div>
-      </div>
-    </div>`;
-}
-function thumbColor(cat){
-  // if-else ธรรมดา: กำหนดสีพื้นตามหมวดหมู่
-  if(cat === 'Dry Food') return '#f1ead9';
-  else if(cat === 'Wet Food') return '#dfe9df';
-  else if(cat === 'Treats') return '#f6dede';
-  else return '#eee';
-}
-
-/* ======================================================================
-   PAGE 1 — HOME
-   ====================================================================== */
-function renderHome(){
-  // ---- เซตของหมวดหมู่ทั้งหมด (ไม่ซ้ำ) ----
-  const categorySet = new Set(PRODUCTS.map(p => p.category));
-  const chipHTML = [...categorySet].map(cat=>{
-    const count = PRODUCTS.filter(p => p.category === cat).length;
-    return `<button class="chip" onclick="goToCategory('${cat}')">${cat} <span class="count">(${count})</span></button>`;
-  }).join('');
-  document.getElementById('categoryChips').innerHTML = chipHTML;
-
-  // ---- สินค้าแนะนำ: if-else เงื่อนไข bestseller && stock ----
-  const featured = PRODUCTS.filter(p=>{
-    if(p.bestseller && p.stock) return true;
-    else return false;
-  });
-  document.getElementById('featuredGrid').innerHTML = featured.map(productCard).join('');
-  updateCartBadge();
-}
-function goToCategory(cat){
-  selectedTags = new Set([cat]);
-  excludedTags = new Set();
-  filterMode = 'AND';
-  goTo('products');
-}
-
-/* ======================================================================
-   PAGE 2 — PRODUCTS  (Set Operations: Union / Intersection / Difference)
-   ====================================================================== */
-const FILTER_GROUPS = {
-  category: { key:'category', label:'ประเภทอาหาร', options:['Dry Food','Wet Food','Treats'] },
-  life:     { key:'life',     label:'ช่วงวัย',     options:['Kitten','Adult','Senior'] },
-  flavor:   { key:'flavor',   label:'รสชาติ',       options:['Chicken','Fish','Grain-Free'] },
-};
-
-function buildFilterUI(){
-  Object.entries(FILTER_GROUPS).forEach(([groupKey, group])=>{
-    const container = document.getElementById('grp-'+groupKey);
-    container.innerHTML = group.options.map(tag=>`
-      <label class="filterOpt">
-        <input type="checkbox" data-tag="${tag}" onchange="toggleTag('${tag}', this.checked)">
-        ${tag}
-      </label>`).join('');
-  });
-  // ช่องยกเว้น (difference) ใช้ตัวเลือกเดียวกันทั้งหมด
-  const allTags = [...new Set(PRODUCTS.flatMap(p=>p.tags))];
-  document.getElementById('grp-exclude').innerHTML = allTags.map(tag=>`
-    <label class="filterOpt">
-      <input type="checkbox" data-extag="${tag}" onchange="toggleExclude('${tag}', this.checked)">
-      ${tag}
-    </label>`).join('');
-}
-function toggleTag(tag, checked){
-  if(checked) selectedTags.add(tag);      // Set.add()
-  else selectedTags.delete(tag);
-  renderProducts();
-}
-function toggleExclude(tag, checked){
-  if(checked) excludedTags.add(tag);
-  else excludedTags.delete(tag);
-  renderProducts();
-}
-function setMode(mode){
-  filterMode = mode;
-  document.getElementById('modeAND').classList.toggle('active', mode==='AND');
-  document.getElementById('modeOR').classList.toggle('active', mode==='OR');
-  renderProducts();
-}
-function clearFilters(){
-  selectedTags = new Set();
-  excludedTags = new Set();
-  document.querySelectorAll('#grp-category input, #grp-life input, #grp-flavor input, #grp-exclude input')
-    .forEach(cb => cb.checked = false);
-  renderProducts();
-}
-
-/* helper: แปลงรายชื่อสินค้าที่มีแท็กหนึ่งๆ ให้เป็น Set ของ id */
-function idSetForTag(tag){
-  return new Set(
-    PRODUCTS.filter(p => p.tags.includes(tag)).map(p => p.id) // .filter() + .includes()
-  );
-}
-function setUnion(a,b){ return new Set([...a, ...b]); }
-function setIntersect(a,b){ return new Set([...a].filter(x => b.has(x))); } // .has()
-function setDifference(a,b){ return new Set([...a].filter(x => !b.has(x))); }
-
-function renderProducts(){
-  buildFilterUI();
-  // sync checkbox visual state with selectedTags/excludedTags after buildFilterUI resets DOM
-  document.querySelectorAll('#grp-category input,#grp-life input,#grp-flavor input').forEach(cb=>{
-    cb.checked = selectedTags.has(cb.dataset.tag);
-  });
-  document.querySelectorAll('#grp-exclude input').forEach(cb=>{
-    cb.checked = excludedTags.has(cb.dataset.extag);
-  });
-
-  let resultSet;
-  if(selectedTags.size === 0){
-    resultSet = new Set(PRODUCTS.map(p=>p.id)); // ไม่เลือกอะไร = แสดงทั้งหมด
-  } else if(filterMode === 'OR'){
-    // UNION: สินค้าที่ตรงกับ "แท็กใดแท็กหนึ่ง" ที่เลือก
-    resultSet = [...selectedTags].reduce((acc, tag)=> setUnion(acc, idSetForTag(tag)), new Set());
-  } else {
-    // INTERSECTION: สินค้าที่ต้องตรง "ทุกแท็ก" ที่เลือกพร้อมกัน
-    const sets = [...selectedTags].map(idSetForTag);
-    resultSet = sets.reduce((acc, s)=> setIntersect(acc, s));
-  }
-
-  // DIFFERENCE: ตัดสินค้าที่มีแท็กในลิสต์ "ยกเว้น" ออก
-  if(excludedTags.size > 0){
-    const excludeSet = [...excludedTags].reduce((acc, tag)=> setUnion(acc, idSetForTag(tag)), new Set());
-    resultSet = setDifference(resultSet, excludeSet);
-  }
-
-  // .some() ตรวจว่าตะกร้ามีของ "ราคาแพง" อยู่ไหม (ใช้แสดง note เล็กๆ)
-  const hasPremium = PRODUCTS.some(p => resultSet.has(p.id) && p.price >= 800);
-
-  const finalList = PRODUCTS.filter(p => resultSet.has(p.id));
-  document.getElementById('productsGrid').innerHTML = finalList.length
-    ? finalList.map(productCard).join('')
-    : `<div class="emptyState" style="grid-column:1/-1;"><div class="big">🐾</div>ไม่พบสินค้าตามเงื่อนไขนี้</div>`;
-
-  document.getElementById('resultBar').innerHTML =
-    `พบ <b>${finalList.length}</b> รายการ ${hasPremium ? '· มีสินค้าพรีเมียมราคา ≥ ฿800 รวมอยู่ด้วย' : ''}`;
-
-  const modeSymbol = filterMode === 'OR' ? '∪ (Union)' : '∩ (Intersection)';
-  const selTxt = selectedTags.size ? [...selectedTags].join(` ${filterMode==='OR'?'∪':'∩'} `) : 'ทั้งหมด';
-  const exTxt = excludedTags.size ? ` − ( ${[...excludedTags].join(' ∪ ')} )` : '';
-  document.getElementById('setExpr').textContent = `ผลลัพธ์ = ${selTxt}${exTxt}   [โหมด: ${modeSymbol}]`;
-
-  updateCartBadge();
-}
-
-/* ======================================================================
-   PAGE 3 — CHECKOUT  (Logic: if-else, && || !  +  Set สำหรับแนะนำสินค้า)
-   ====================================================================== */
+/* =========================================================================
+   9) CHECKOUT PAGE — Logic (if/else, &&, ||, !) + Set สำหรับแนะนำสินค้า
+   ========================================================================= */
 function renderCheckout(){
-  const list = document.getElementById('cartList');
-  const items = [...cartMap.entries()].map(([id,qty]) => ({...PRODUCTS.find(p=>p.id===id), qty}));
+  const cartIds = Object.keys(cart).filter(id => cart[id] > 0);
+  const cartList = document.getElementById('cartList');
+  cartList.innerHTML = '';
 
-  if(items.length === 0){
-    list.innerHTML = `<div class="emptyState"><div class="big">🛒</div>ตะกร้ายังว่างอยู่เลย ลองไปเลือกอาหารแมวกันก่อนนะ</div>`;
+  if (cartIds.length === 0){
+    cartList.innerHTML = `<div class="empty-note">ตะกร้ายังว่างอยู่ ลองไปเลือกของอร่อยให้น้องแมวกันก่อนนะ 🐾</div>`;
   } else {
-    list.innerHTML = items.map(p => `
-      <div class="cartLine">
-        <div class="thumbSm">${p.img}</div>
-        <div class="info">
-          <h4>${p.name}</h4>
-          <div class="p">฿${p.price.toLocaleString()} / ชิ้น</div>
+    cartIds.forEach(id=>{
+      const p = PRODUCTS.find(x => x.id === id);
+      const qty = cart[id];
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `
+        ${productArtHTML(p.category)}
+        <div class="ci-body">
+          <div class="ci-top">
+            <span class="ci-name">${p.name}</span>
+            <button class="ci-remove" data-remove="${id}">นำออก</button>
+          </div>
+          <div class="qty-row">
+            <button class="qty-btn" data-dec="${id}">−</button>
+            <span class="qty-num">${qty}</span>
+            <button class="qty-btn" data-inc="${id}">+</button>
+            <span class="ci-price" style="margin-left:auto">${money(p.price*qty)}</span>
+          </div>
         </div>
-        <div class="qtyBox">
-          <button onclick="changeQty('${p.id}',-1)">−</button>
-          <span>${p.qty}</span>
-          <button onclick="changeQty('${p.id}',1)">+</button>
-        </div>
-        <button class="removeX" onclick="removeFromCart('${p.id}')">ลบ</button>
-      </div>`).join('');
+      `;
+      cartList.appendChild(row);
+    });
+    cartList.querySelectorAll('[data-inc]').forEach(b=>b.addEventListener('click', ()=>{ cart[b.dataset.inc]++; saveCart(); renderCheckout(); updateCartCount(); }));
+    cartList.querySelectorAll('[data-dec]').forEach(b=>b.addEventListener('click', ()=>{
+      const id = b.dataset.dec;
+      cart[id]--;
+      if (cart[id] <= 0) delete cart[id];   // if: เอาออกจากตะกร้าถ้าจำนวนเหลือ 0
+      saveCart(); renderCheckout(); updateCartCount();
+    }));
+    cartList.querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click', ()=>{ delete cart[b.dataset.remove]; saveCart(); renderCheckout(); updateCartCount(); }));
   }
 
-  // ---- subtotal ด้วย reduce() ----
-  const subtotal = items.reduce((sum, p) => sum + p.price * p.qty, 0);
-  const totalQty = items.reduce((sum, p) => sum + p.qty, 0);
-  const isMember = document.getElementById('memberCheck').checked;
+  // ----- คำนวณราคา -----
+  const cartProducts = cartIds.map(id => ({ ...PRODUCTS.find(p=>p.id===id), qty: cart[id] }));
+  const itemCount = cartProducts.reduce((sum, p) => sum + p.qty, 0);
+  const subtotal  = cartProducts.reduce((sum, p) => sum + p.price * p.qty, 0); // reduce(): รวมยอดเงิน
 
-  // ---- Logic เงื่อนไขโปรโมชั่น (if-else) ----
-  let discountRate = 0;
-  let discountLabel = 'ส่วนลด';
-  if(subtotal >= 1000){
-    discountRate = 0.20; discountLabel = 'ส่วนลด 20% (ซื้อครบ ฿1,000)';
-  } else if(subtotal >= 500){
-    discountRate = 0.10; discountLabel = 'ส่วนลด 10% (ซื้อครบ ฿500)';
-  } else {
-    discountRate = 0; discountLabel = 'ส่วนลด (ยังไม่ถึงเกณฑ์)';
+  // เซตของหมวดหมู่ที่อยู่ในตะกร้า (ไม่ซ้ำ) ใช้ตรวจโปรโมชันด้วย .has()
+  const cartCategorySet = new Set(cartProducts.map(p => p.category));
+  const cartTagSet = new Set(cartProducts.flatMap(p => p.tags));
+
+  // ----- LOGIC: เงื่อนไขโปรโมชัน (if-else, &&, ||, !) -----
+  let discount = 0;
+  let discountLabel = '';
+
+  if (subtotal >= 1000) {
+    // เงื่อนไข A: ซื้อครบ 1,000 บาท ลด 10%
+    discount = Math.round(subtotal * 0.10);
+    discountLabel = 'ลด 10% (ยอดซื้อครบ ฿1,000)';
+  } else if (subtotal >= 500 && itemCount >= 3) {
+    // เงื่อนไข B: ใช้ && ร่วมกัน — ครบ 500 และซื้ออย่างน้อย 3 ชิ้น ลด 5%
+    discount = Math.round(subtotal * 0.05);
+    discountLabel = 'ลด 5% (ครบ ฿500 และซื้อ ≥ 3 ชิ้น)';
   }
-  const discount = Math.round(subtotal * discountRate);
 
-  // ---- ค่าส่ง: ใช้ && และ || ----
-  const freeShipByAmount = subtotal > 500;
-  const freeShip = freeShipByAmount || isMember;               // OR: เข้าเงื่อนไขใดเงื่อนไขหนึ่งก็ฟรีส่ง
-  const shipFee = freeShip ? 0 : 40;
+  // เงื่อนไข C: ใช้ && — โปรของเล่นคู่ขนม ลดเพิ่มตายตัว 20 บาท ถ้ามีของเล่นและขนมครบคู่
+  const comboBonus = (cartCategorySet.has('Toy') && cartCategorySet.has('Treats')) ? 20 : 0;
+  if (comboBonus > 0) discountLabel += (discountLabel ? ' + ' : '') + 'ลดเพิ่ม ฿20 (ซื้อขนมคู่ของเล่น)';
+  discount += comboBonus;
 
-  const total = subtotal - discount + shipFee;
+  // ค่าส่ง: ฟรีถ้ายอดถึง 500 "หรือ" ซื้อ 5 ชิ้นขึ้นไป (||) — ไม่งั้นคิด 40 บาท
+  const shipping = (subtotal >= 500 || itemCount >= 5) ? 0 : 40;
 
-  document.getElementById('sumSubtotal').textContent = `฿${subtotal.toLocaleString()}`;
-  document.getElementById('discountLabel').textContent = discountLabel;
-  document.getElementById('sumDiscount').textContent = `−฿${discount.toLocaleString()}`;
-  document.getElementById('sumShip').textContent = shipFee === 0 ? 'ฟรี' : `฿${shipFee}`;
-  document.getElementById('sumTotal').textContent = `฿${total.toLocaleString()}`;
+  const grandTotal = Math.max(subtotal - discount, 0) + shipping;
 
-  // ---- NOT (!) ตัวอย่าง: แจ้งเตือนเมื่อ "ยังไม่ใช่สมาชิก" และใกล้ฟรีค่าส่ง ----
-  const notMember = !isMember;
-  let note = '';
-  if(notMember && !freeShipByAmount && subtotal > 0){
-    const remain = 501 - subtotal;
-    note = `ซื้อเพิ่มอีก ฿${remain} เพื่อรับส่งฟรี หรือสมัคร Whisker Club เพื่อส่งฟรีทุกออเดอร์`;
-  } else if(freeShip){
-    note = '🎉 คำสั่งซื้อนี้ได้รับสิทธิ์ส่งฟรีแล้ว';
-  } else {
-    note = 'เพิ่มสินค้าลงตะกร้าเพื่อดูสิทธิพิเศษ';
-  }
-  document.getElementById('promoNote').textContent = note;
+  document.getElementById('itemCount').textContent = itemCount;
+  document.getElementById('subtotal').textContent = money(subtotal);
+  document.getElementById('discountLine').textContent = '-' + money(discount);
+  document.getElementById('shipLine').textContent = shipping === 0 ? 'ฟรี' : money(shipping);
+  document.getElementById('grandTotal').textContent = money(grandTotal);
 
-  renderRecommendations(items);
-  updateCartBadge();
+  const promoBox = document.getElementById('promoBox');
+  promoBox.innerHTML = `
+    <div class="promo ${subtotal>=1000?'on':''}"><span class="dot"></span>ซื้อครบ ฿1,000 ลด 10%</div>
+    <div class="promo ${(subtotal>=500 && itemCount>=3 && subtotal<1000)?'on':''}"><span class="dot"></span>ครบ ฿500 และซื้อ ≥ 3 ชิ้น ลด 5%</div>
+    <div class="promo ${comboBonus>0?'on':''}"><span class="dot"></span>ซื้อของเล่น + ขนม ลดเพิ่ม ฿20</div>
+    <div class="promo ${shipping===0?'on':''}"><span class="dot"></span>ยอด ≥ ฿500 หรือซื้อ ≥ 5 ชิ้น ส่งฟรี</div>
+  `;
+
+  // เงื่อนไข NOT: ถ้าในตะกร้า "ไม่มี" อาหารเปียกเลย ให้ขึ้นข้อความชวนซื้อ
+  const wetNudge = document.getElementById('wetNudge');
+  const hasNoWetFood = !cartCategorySet.has('Wet');
+  wetNudge.style.display = (cartIds.length > 0 && hasNoWetFood) ? 'block' : 'none';
+
+  renderRecommendations(cartProducts, cartCategorySet, cartTagSet);
 }
 
-function renderRecommendations(cartItems){
-  const cartIdSet = new Set(cartItems.map(p=>p.id));
-  const recoBlock = document.getElementById('recoBlock');
+/* -------- Recommendations: ใช้ Set Difference หาโปรดักต์ที่ยังไม่มีในตะกร้า -------- */
+function renderRecommendations(cartProducts, cartCategorySet, cartTagSet){
+  const cartIdSet = new Set(cartProducts.map(p => p.id));
+  const allIdSet = new Set(PRODUCTS.map(p => p.id));
 
-  if(cartItems.length === 0){
-    recoBlock.style.display = 'none';
-    return;
+  // Set Difference: สินค้าทั้งหมด "ลบ" สินค้าที่อยู่ในตะกร้าแล้ว
+  const candidateIds = new Set([...allIdSet].filter(id => !cartIdSet.has(id)));
+
+  let candidates = PRODUCTS.filter(p => candidateIds.has(p.id));
+
+  // ถ้าตะกร้ามีของอยู่ ให้จัดลำดับสินค้าที่ "แท็กเกี่ยวข้อง" กับของในตะกร้าไว้ก่อน (.some())
+  if (cartTagSet.size > 0){
+    candidates.sort((a,b)=>{
+      const aScore = a.tags.some(t => cartTagSet.has(t)) ? 1 : 0;
+      const bScore = b.tags.some(t => cartTagSet.has(t)) ? 1 : 0;
+      return bScore - aScore;
+    });
   }
-  recoBlock.style.display = 'block';
 
-  // เซตของแท็กทั้งหมดที่อยู่ในตะกร้า
-  const cartTagSet = new Set(cartItems.flatMap(p => p.tags));
-
-  // รวมสินค้าทุกชิ้นที่ "มีแท็กร่วม" กับตะกร้า (Union ของแต่ละ tag-set)
-  let candidateSet = new Set();
-  cartTagSet.forEach(tag => { candidateSet = setUnion(candidateSet, idSetForTag(tag)); });
-
-  // ตัดสินค้าที่ "มีอยู่แล้วในตะกร้า" ออก -> Set Difference
-  const recoSet = setDifference(candidateSet, cartIdSet);
-
-  const recoList = PRODUCTS.filter(p => recoSet.has(p.id)).slice(0, 3);
-  document.getElementById('recoGrid').innerHTML = recoList.length
-    ? recoList.map(productCard).join('')
-    : `<div class="emptyState" style="grid-column:1/-1; padding:20px;">ไม่มีสินค้าที่เกี่ยวข้องเพิ่มเติมแล้ว</div>`;
+  const recoGrid = document.getElementById('recoGrid');
+  recoGrid.innerHTML = '';
+  candidates.slice(0,4).forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'reco-card';
+    card.innerHTML = `
+      ${productArtHTML(p.category)}
+      <div class="n">${p.name}</div>
+      <div class="p">${money(p.price)}</div>
+      <button data-reco-add="${p.id}">+ ใส่ตะกร้า</button>
+    `;
+    card.querySelector('[data-reco-add]').addEventListener('click', ()=>{
+      cart[p.id] = (cart[p.id]||0)+1; saveCart(); updateCartCount(); renderCheckout();
+    });
+    recoGrid.appendChild(card);
+  });
 }
 
-function placeOrder(){
-  if(cartMap.size === 0){ alert('ตะกร้ายังว่างอยู่ ลองเลือกสินค้าก่อนนะ 🐱'); return; }
-  alert('ขอบคุณสำหรับคำสั่งซื้อ! (นี่คือ Demo เพื่อการศึกษา ยังไม่ได้เชื่อมระบบชำระเงินจริง)');
-}
-
-/* ======================================================================
-   INIT
-   ====================================================================== */
-goTo('home');
+/* =========================================================================
+   10) INIT
+   ========================================================================= */
+updateCartCount();
+renderHome();
+renderProducts();
+goPage('home');
 </script>
 </body>
 </html>
