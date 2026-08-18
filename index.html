@@ -1,3 +1,438 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แมวอิ่ม MEOWFULL | ร้านอาหารแมว</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFF8F0;
+    --ink:#22312B;
+    --ink-soft:#5B6B62;
+    --primary:#1B4B43;      /* deep teal - main brand */
+    --primary-dark:#123832;
+    --accent:#E76F51;       /* coral - CTA / price */
+    --warm:#F4A261;         /* peach - highlight */
+    --sage:#B7D8C1;         /* soft sage - chips bg */
+    --sage-deep:#7FAE8E;
+    --card:#FFFFFF;
+    --line:#E7DFCF;
+    --shadow: 0 10px 30px -12px rgba(27,75,67,.25);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Sarabun',sans-serif; font-size:16px; line-height:1.6;
+  }
+  h1,h2,h3,h4,.display{ font-family:'Kanit',sans-serif; margin:0; }
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; cursor:pointer;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--primary); color:#fff;
+    border-bottom:4px solid var(--warm);
+  }
+  .nav-wrap{
+    max-width:1120px; margin:0 auto; padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; cursor:pointer; }
+  .brand .paw{ width:34px; height:34px; }
+  .brand-text{ font-family:'Kanit',sans-serif; font-weight:700; font-size:20px; line-height:1.1; }
+  .brand-text small{ display:block; font-family:'Sarabun',sans-serif; font-weight:400; font-size:11px; letter-spacing:.12em; opacity:.75; }
+  nav{ display:flex; gap:6px; }
+  .nav-btn{
+    border:none; background:transparent; color:#fff; opacity:.75;
+    font-weight:600; font-size:15px; padding:9px 14px; border-radius:999px;
+    transition:.18s;
+  }
+  .nav-btn:hover{ opacity:1; background:rgba(255,255,255,.08); }
+  .nav-btn.is-active{ opacity:1; background:var(--warm); color:var(--primary-dark); }
+  .cart-pill{
+    display:flex; align-items:center; gap:7px; background:rgba(255,255,255,.12);
+    padding:8px 14px; border-radius:999px; font-weight:600; font-size:14px; border:none; color:#fff;
+  }
+  .cart-pill b{ background:var(--accent); color:#fff; border-radius:999px; padding:1px 8px; font-size:12px; }
+
+  main{ max-width:1120px; margin:0 auto; padding:0 20px 80px; }
+  .page{ display:none; animation:fade .35s ease; }
+  .page.is-active{ display:block; }
+  @keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- LANDING / ENTRANCE PAGE ---------- */
+  .landing-hero{
+    position:relative; width:100%; height:calc(100vh - 66px); min-height:560px; max-height:820px;
+    overflow:hidden;
+  }
+  .landing-img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .landing-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(18,54,47,.1) 0%, rgba(18,54,47,.45) 55%, rgba(18,54,47,.9) 100%);
+    display:flex; align-items:flex-end; justify-content:center;
+    padding:70px 20px 64px;
+  }
+  .landing-content{ text-align:center; color:#fff; max-width:600px; }
+  .landing-eyebrow{
+    font-size:13px; font-weight:700; letter-spacing:.18em; color:var(--warm); text-transform:uppercase;
+  }
+  .landing-title{
+    margin-top:10px; font-size:46px; font-weight:800; line-height:1.15; text-shadow:0 4px 18px rgba(0,0,0,.35);
+  }
+  .landing-title span{ color:var(--warm); }
+  .landing-sub{
+    margin-top:12px; color:#EAF3EE; font-size:15.5px; letter-spacing:.02em;
+  }
+  .landing-btn{
+    margin-top:30px; background:var(--warm); color:var(--primary-dark); border:none; border-radius:999px;
+    padding:15px 38px; font-weight:700; font-size:16px; font-family:'Kanit'; letter-spacing:.02em;
+    box-shadow:0 12px 26px -10px rgba(0,0,0,.5); transition:.18s;
+  }
+  .landing-btn:hover{ transform:translateY(-2px); box-shadow:0 16px 30px -10px rgba(0,0,0,.55); }
+  .landing-badges{ display:flex; gap:10px; justify-content:center; margin-top:22px; flex-wrap:wrap; }
+  .landing-badges span{
+    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.35); backdrop-filter:blur(2px);
+    border-radius:999px; padding:6px 14px; font-size:12.5px; font-weight:600;
+  }
+  @media (max-width:880px){
+    .landing-hero{ height:100vh; min-height:520px; }
+    .landing-title{ font-size:32px; }
+  }
+
+  /* ---------- ART ---------- */
+  .art-wrap{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .art-wrap::before{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(rgba(255,255,255,.35) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+  }
+  .art-icon{ width:44%; height:auto; position:relative; z-index:1; filter:drop-shadow(0 6px 10px rgba(0,0,0,.12)); }
+
+  /* ---------- HOME ---------- */
+  .hero{
+    margin-top:28px; border-radius:28px; overflow:hidden; position:relative;
+    background:linear-gradient(120deg,var(--primary) 0%, var(--primary-dark) 100%);
+    color:#fff; padding:48px 40px; display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center;
+  }
+  .hero h1{ font-size:38px; font-weight:800; line-height:1.25; }
+  .hero h1 span{ color:var(--warm); }
+  .hero p{ margin-top:14px; color:#DCEAE4; max-width:46ch; }
+  .hero-stats{ display:flex; gap:22px; margin-top:22px; flex-wrap:wrap; }
+  .hero-stats div{ background:rgba(255,255,255,.09); border-radius:14px; padding:10px 16px; }
+  .hero-stats b{ display:block; font-family:'Kanit'; font-size:22px; color:var(--warm); }
+  .hero-stats span{ font-size:12px; opacity:.85; }
+  .hero-img{ border-radius:20px; overflow:hidden; aspect-ratio:4/3; box-shadow:var(--shadow); background:linear-gradient(150deg,var(--warm),var(--accent)); }
+
+  section.block{ margin-top:52px; }
+  .block-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:18px; gap:12px; flex-wrap:wrap;}
+  .block-head h2{ font-size:24px; color:var(--primary-dark); }
+  .block-head p{ color:var(--ink-soft); margin-top:4px; font-size:14px; }
+  .eyebrow{ font-size:12px; font-weight:700; letter-spacing:.14em; color:var(--accent); text-transform:uppercase; }
+
+  .cat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .cat-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px;
+    text-align:left; transition:.18s; display:flex; flex-direction:column; gap:6px; cursor:pointer;
+  }
+  .cat-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--sage-deep); }
+  .cat-card .n{ font-family:'Kanit'; font-weight:700; font-size:17px; color:var(--primary-dark); }
+  .cat-card .c{ font-size:12px; color:var(--ink-soft); }
+  .cat-card .badge{ align-self:flex-start; background:var(--sage); color:var(--primary-dark); font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; }
+
+  .prod-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .prod-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+    display:flex; flex-direction:column; transition:.2s;
+  }
+  .prod-card:hover{ box-shadow:var(--shadow); transform:translateY(-4px); }
+  .prod-img{ aspect-ratio:4/3; overflow:hidden; background:linear-gradient(150deg,#F4A261 0%,#E76F51 100%); }
+  .prod-body{ padding:16px 16px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .prod-tags{ display:flex; gap:6px; flex-wrap:wrap; }
+  .tag{ font-size:10.5px; font-weight:700; background:var(--sage); color:var(--primary-dark); padding:2px 9px; border-radius:999px; letter-spacing:.02em;}
+  .tag.alt{ background:#FBE3D6; color:#9C4A2E; }
+  .prod-name{ font-family:'Kanit'; font-weight:600; font-size:16px; color:var(--ink); }
+  .prod-desc{ font-size:12.5px; color:var(--ink-soft); flex:1; }
+  .prod-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:4px; }
+  .price{ font-family:'Kanit'; font-weight:700; color:var(--accent); font-size:17px; }
+  .add-btn{
+    background:var(--primary); color:#fff; border:none; border-radius:999px; padding:8px 15px;
+    font-weight:600; font-size:13px; transition:.15s;
+  }
+  .add-btn:hover{ background:var(--primary-dark); }
+
+  /* ---------- PRODUCTS PAGE ---------- */
+  .products-head{ margin-top:30px; }
+  .search-row{ display:flex; gap:10px; margin-bottom:18px; }
+  .search-row input{
+    flex:1; padding:13px 16px; border-radius:12px; border:1px solid var(--line); font-family:inherit; font-size:15px; background:#fff;
+  }
+  .filter-panel{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; margin-bottom:24px;
+  }
+  .filter-panel h3{ font-size:15px; color:var(--primary-dark); margin-bottom:4px; }
+  .filter-panel .hint{ font-size:12.5px; color:var(--ink-soft); margin-bottom:14px; }
+  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .chip{
+    border:1.5px solid var(--line); background:#fff; color:var(--ink); border-radius:999px;
+    padding:7px 15px; font-size:13.5px; font-weight:600; transition:.15s; cursor:pointer;
+  }
+  .chip.is-on{ background:var(--primary); border-color:var(--primary); color:#fff; }
+  .op-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; border-top:1px dashed var(--line); padding-top:16px; }
+  .op-row .lbl{ font-size:13px; font-weight:700; color:var(--primary-dark); }
+  .op-btn{
+    display:flex; align-items:center; gap:8px; border:1.5px solid var(--line); background:#fff;
+    padding:7px 14px 7px 10px; border-radius:12px; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .op-btn.is-on{ border-color:var(--accent); background:#FFF1EC; color:#9C4A2E; }
+  .op-btn svg{ width:26px; height:20px; }
+  .result-line{ font-size:13px; color:var(--ink-soft); margin:6px 0 16px; }
+  .result-line b{ color:var(--primary-dark); }
+
+  /* ---------- CHECKOUT ---------- */
+  .checkout-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:26px; margin-top:28px; align-items:start; }
+  .cart-item{
+    display:flex; gap:14px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:12px;
+  }
+  .cart-item .art-wrap{ width:78px; height:78px; border-radius:12px; flex-shrink:0; background:var(--sage); }
+  .ci-body{ flex:1; display:flex; flex-direction:column; gap:4px; }
+  .ci-top{ display:flex; justify-content:space-between; gap:8px; }
+  .ci-name{ font-weight:600; font-size:14.5px; }
+  .ci-remove{ background:none; border:none; color:var(--ink-soft); font-size:12px; text-decoration:underline; padding:0; cursor:pointer; }
+  .qty-row{ display:flex; align-items:center; gap:10px; margin-top:4px; }
+  .qty-btn{ width:26px; height:26px; border-radius:8px; border:1px solid var(--line); background:#fff; font-weight:700; cursor:pointer; }
+  .qty-num{ font-weight:600; min-width:16px; text-align:center; }
+  .ci-price{ font-family:'Kanit'; color:var(--accent); font-weight:700; }
+  .empty-note{ background:var(--card); border:1px dashed var(--line); border-radius:16px; padding:34px; text-align:center; color:var(--ink-soft); }
+
+  .summary{ background:var(--primary); color:#fff; border-radius:20px; padding:24px; position:sticky; top:92px; }
+  .summary h3{ font-family:'Kanit'; font-size:18px; margin-bottom:14px; }
+  .sum-row{ display:flex; justify-content:space-between; font-size:14px; padding:7px 0; color:#DCEAE4; }
+  .sum-row.total{ border-top:1px solid rgba(255,255,255,.25); margin-top:8px; padding-top:14px; font-size:18px; font-weight:700; color:#fff; font-family:'Kanit'; }
+  .promo{
+    display:flex; gap:8px; align-items:flex-start; background:rgba(255,255,255,.1); border-radius:12px; padding:10px 12px; margin-top:10px; font-size:12.5px; line-height:1.5;
+  }
+  .promo.on{ background:rgba(244,162,97,.22); border:1px solid var(--warm); }
+  .promo .dot{ width:7px; height:7px; border-radius:50%; margin-top:5px; flex-shrink:0; background:rgba(255,255,255,.4); }
+  .promo.on .dot{ background:var(--warm); }
+  .checkout-btn{
+    width:100%; margin-top:16px; background:var(--warm); color:var(--primary-dark); border:none; border-radius:12px;
+    padding:14px; font-weight:700; font-size:15px; font-family:'Kanit'; cursor:pointer;
+  }
+  .reco-title{ font-size:15px; font-weight:700; color:var(--primary-dark); margin:36px 0 12px; }
+  .reco-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .reco-card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:10px; text-align:center; }
+  .reco-card .art-wrap{ width:100%; aspect-ratio:1; border-radius:10px; margin-bottom:8px; background:var(--bg); }
+  .reco-card .n{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
+  .reco-card .p{ font-size:12.5px; color:var(--accent); font-weight:700; font-family:'Kanit'; margin-bottom:8px; }
+  .reco-card button{ width:100%; background:var(--sage); border:none; border-radius:8px; padding:6px; font-size:12px; font-weight:700; color:var(--primary-dark); cursor:pointer; }
+
+  footer{ text-align:center; padding:30px 20px; color:var(--ink-soft); font-size:12.5px; }
+
+  /* ---------- ORDER CONFIRMATION MODAL ---------- */
+  .modal-backdrop{
+    display:none; position:fixed; inset:0; z-index:100; background:rgba(18,54,47,.55);
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-backdrop.is-open{ display:flex; }
+  .modal-card{
+    background:#fff; border-radius:22px; padding:34px 30px; max-width:420px; width:100%;
+    text-align:center; box-shadow:0 24px 60px -16px rgba(0,0,0,.4); animation:fade .25s ease;
+  }
+  .modal-check{
+    width:64px; height:64px; border-radius:50%; background:var(--sage); color:var(--primary-dark);
+    font-size:32px; font-weight:800; display:flex; align-items:center; justify-content:center; margin:0 auto 14px;
+  }
+  .modal-card h3{ font-size:22px; color:var(--primary-dark); }
+  .modal-order-no{ font-size:13px; color:var(--ink-soft); margin-top:6px; }
+  .modal-order-no b{ color:var(--accent); font-family:'Kanit'; }
+  .modal-summary{
+    text-align:left; background:var(--bg); border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px; margin:18px 0; font-size:13.5px;
+  }
+  .modal-summary .m-row{ display:flex; justify-content:space-between; padding:4px 0; color:var(--ink-soft); }
+  .modal-summary .m-row.total{ border-top:1px dashed var(--line); margin-top:6px; padding-top:10px; font-weight:700; color:var(--primary-dark); font-family:'Kanit'; font-size:15.5px; }
+  .modal-thanks{ font-size:13px; color:var(--ink-soft); }
+  .modal-close-btn{
+    width:100%; margin-top:18px; background:var(--primary); color:#fff; border:none; border-radius:12px;
+    padding:13px; font-weight:700; font-size:14.5px; font-family:'Kanit'; cursor:pointer;
+  }
+  .modal-close-btn:hover{ background:var(--primary-dark); }
+
+  @media (max-width:880px){
+    .hero{ grid-template-columns:1fr; padding:32px 22px; }
+    .cat-grid{ grid-template-columns:repeat(2,1fr); }
+    .prod-grid{ grid-template-columns:repeat(2,1fr); }
+    .checkout-grid{ grid-template-columns:1fr; }
+    .reco-grid{ grid-template-columns:repeat(2,1fr); }
+    nav{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand" data-page="home">
+      <svg class="paw" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="40" r="15" fill="#F4A261"/><circle cx="14" cy="24" r="8" fill="#F4A261"/><circle cx="50" cy="24" r="8" fill="#F4A261"/><circle cx="24" cy="12" r="7" fill="#F4A261"/><circle cx="40" cy="12" r="7" fill="#F4A261"/></svg>
+      <div class="brand-text">แมวอิ่ม MEOWFULL<small>CAT FOOD & SUPPLY</small></div>
+    </div>
+    <nav id="nav">
+      <button class="nav-btn" data-page="home">หน้าแรก</button>
+      <button class="nav-btn" data-page="products">สินค้าทั้งหมด</button>
+      <button class="nav-btn" data-page="checkout">ตะกร้า</button>
+    </nav>
+    <button class="cart-pill" data-page="checkout" id="cartPill">
+      🛒 ตะกร้าของฉัน <b id="cartCount">0</b>
+    </button>
+  </div>
+</header>
+
+<!-- ============ PAGE 0: LANDING / ENTRANCE ============ -->
+<section class="page is-active" id="page-landing">
+  <div class="landing-hero">
+    <img src="https://lh3.googleusercontent.com/d/1XThw0GInIu6a4Kksc6o-qO2z7mG-vU4B" alt="หน้าร้านแมวอิ่ม MEOWFULL" class="landing-img">
+    <div class="landing-overlay">
+      <div class="landing-content">
+        <p class="landing-eyebrow">ยินดีต้อนรับสู่</p>
+        <h1 class="landing-title">แมวอิ่ม <span>MEOWFULL</span></h1>
+        <p class="landing-sub">อาหารและของใช้แมวครบวงจร | Pet Shop & Cafe — จำหน่ายอาหารแมวโดยเฉพาะ</p>
+        <div class="landing-badges">
+          <span>🐾 อาหารเปียก-แห้งครบครัน</span>
+          <span>⏰ เปิดทุกวัน 10:00–20:00</span>
+          <span>🚚 จัดส่งไว 24 ชม.</span>
+        </div>
+        <button class="landing-btn" id="enterShopBtn">เข้าสู่ร้าน →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- ============ PAGE 1: HOME ============ -->
+  <section class="page" id="page-home">
+    <div class="hero">
+      <div>
+        <p class="eyebrow" style="color:var(--warm)">ร้านอาหารแมวออนไลน์</p>
+        <h1>ของอร่อยที่แมวคุณ<span>รัก</span> ในที่เดียว</h1>
+        <p>คัดสรรอาหารเปียก อาหารแห้ง ขนม และของเล่น สำหรับน้องแมวทุกวัย พร้อมระบบกรองสินค้าอัจฉริยะที่ช่วยหาสิ่งที่ใช่ให้แมวคุณได้เร็วขึ้น</p>
+        <div class="hero-stats" id="heroStats"></div>
+      </div>
+      <div class="hero-img" id="heroArt"></div>
+    </div>
+
+    <section class="block">
+      <div class="block-head">
+        <div>
+          <p class="eyebrow">จัดกลุ่มด้วย Set</p>
+          <h2>หมวดหมู่สินค้า</h2>
+          <p>ระบบดึงหมวดหมู่ทั้งหมดมาจาก <code>new Set()</code> เพื่อไม่ให้ชื่อหมวดซ้ำกัน แล้วใช้ <code>.size</code> นับจำนวนหมวดที่มีจริง</p>
+        </div>
+      </div>
+      <div class="cat-grid" id="categoryGrid"></div>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <div>
+          <p class="eyebrow">สินค้าแนะนำ</p>
+          <h2>สินค้าขายดีประจำสัปดาห์</h2>
+        </div>
+        <button class="nav-btn" style="background:var(--sage);color:var(--primary-dark)" data-page="products">ดูสินค้าทั้งหมด →</button>
+      </div>
+      <div class="prod-grid" id="featuredGrid"></div>
+    </section>
+  </section>
+
+  <!-- ============ PAGE 2: PRODUCTS ============ -->
+  <section class="page" id="page-products">
+    <div class="products-head">
+      <p class="eyebrow" style="margin-top:26px">สินค้าทั้งหมด</p>
+      <h2 style="font-size:26px;color:var(--primary-dark)">ค้นหาและกรองสินค้า</h2>
+    </div>
+
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="ค้นหาชื่อสินค้า เช่น แซลมอน, ทูน่า, คิตเท่น...">
+    </div>
+
+    <div class="filter-panel">
+      <h3>กรองด้วยแท็ก (Operation of Set)</h3>
+      <p class="hint">เลือกแท็กตั้งแต่ 2 อันขึ้นไป แล้วเลือกวิธีรวมชุดข้อมูล — ระบบจะคำนวณด้วย Union / Intersection / Difference จริง ๆ ไม่ใช่แค่ตัวกรองธรรมดา</p>
+      <div class="chip-row" id="tagChips"></div>
+      <div class="op-row">
+        <span class="lbl">รวมชุดด้วย:</span>
+        <button class="op-btn is-on" data-op="union">
+          <svg viewBox="0 0 26 20"><circle cx="10" cy="10" r="8" fill="#E76F51" fill-opacity=".55"/><circle cx="17" cy="10" r="8" fill="#1B4B43" fill-opacity=".55"/></svg>
+          Union (หรือ)
+        </button>
+        <button class="op-btn" data-op="intersect">
+          <svg viewBox="0 0 26 20"><circle cx="10" cy="10" r="8" fill="none" stroke="#E76F51" stroke-width="1.5"/><circle cx="17" cy="10" r="8" fill="none" stroke="#1B4B43" stroke-width="1.5"/><clipPath id="clipI"><circle cx="10" cy="10" r="8"/></clipPath><circle cx="17" cy="10" r="8" fill="#7FAE8E" clip-path="url(#clipI)"/></svg>
+          Intersection (และ)
+        </button>
+        <button class="op-btn" data-op="difference">
+          <svg viewBox="0 0 26 20"><circle cx="17" cy="10" r="8" fill="none" stroke="#1B4B43" stroke-width="1.5"/><clipPath id="clipD"><circle cx="10" cy="10" r="8"/></clipPath><circle cx="10" cy="10" r="8" fill="#E76F51" fill-opacity=".65"/><circle cx="17" cy="10" r="8" fill="#fff" clip-path="url(#clipD)"/></svg>
+          Difference (แต่ไม่ใช่)
+        </button>
+        <button class="chip" id="clearFilters" style="margin-left:auto;">ล้างตัวกรอง</button>
+      </div>
+    </div>
+
+    <p class="result-line" id="resultLine"></p>
+    <div class="prod-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- ============ PAGE 3: CHECKOUT ============ -->
+  <section class="page" id="page-checkout">
+    <p class="eyebrow" style="margin-top:26px">สรุปคำสั่งซื้อ</p>
+    <h2 style="font-size:26px;color:var(--primary-dark)">ตะกร้าสินค้า</h2>
+
+    <div class="checkout-grid">
+      <div>
+        <div id="cartList"></div>
+      </div>
+      <div class="summary">
+        <h3>สรุปยอดชำระ</h3>
+        <div class="sum-row"><span>ราคาสินค้า (<span id="itemCount">0</span> ชิ้น)</span><span id="subtotal">฿0</span></div>
+        <div class="sum-row"><span>ส่วนลด</span><span id="discountLine">-฿0</span></div>
+        <div class="sum-row"><span>ค่าจัดส่ง</span><span id="shipLine">฿0</span></div>
+        <div class="sum-row total"><span>ยอดสุทธิ</span><span id="grandTotal">฿0</span></div>
+
+        <div id="promoBox"></div>
+        <button class="checkout-btn" id="confirmOrderBtn">ยืนยันคำสั่งซื้อ</button>
+      </div>
+    </div>
+
+    <div class="reco-title" id="recoTitle">สินค้าที่คุณอาจสนใจเพิ่มเติม (แนะนำจากรายการอื่นๆ ที่ยังไม่มีในตะกร้า)</div>
+    <div class="reco-grid" id="recoGrid"></div>
+  </section>
+
+</main>
+
+<!-- ============ ORDER CONFIRMATION MODAL ============ -->
+<div class="modal-backdrop" id="orderModalBackdrop">
+  <div class="modal-card">
+    <div class="modal-check">✓</div>
+    <h3>สั่งซื้อสำเร็จแล้ว!</h3>
+    <p class="modal-order-no" id="modalOrderNo"></p>
+    <div class="modal-summary" id="modalSummary"></div>
+    <p class="modal-thanks">ขอบคุณที่อุดหนุนแมวอิ่ม MEOWFULL 🐾 เดี๋ยวแมวคุณจะได้ทานของอร่อยเร็ว ๆ นี้</p>
+    <button class="modal-close-btn" id="modalCloseBtn">กลับไปเลือกซื้อต่อ</button>
+  </div>
+</div>
+
+<footer>© 2026 แมวอิ่ม MEOWFULL — ร้านจำหน่ายอาหารและอุปกรณ์สัตว์เลี้ยง</footer>
+
 <script>
 /* =========================================================================
    1) DATA STORE (Products & Categories)
@@ -14,7 +449,7 @@ const PRODUCTS = [
 /* =========================================================================
    2) STATE MANAGEMENT
    ========================================================================= */
-let cart = []; // Store items: { product, qty }
+let cart = []; 
 let selectedTags = new Set();
 let currentOp = 'union';
 
@@ -63,7 +498,6 @@ function switchPage(pageId) {
    5) RENDER HOME PAGE
    ========================================================================= */
 function renderHome() {
-  // Stats
   const statsContainer = document.getElementById('heroStats');
   const categoriesSet = new Set(PRODUCTS.map(p => p.category));
   
@@ -73,7 +507,6 @@ function renderHome() {
     <div><b>100%</b><span>ของแท้เกรดพรีเมียม</span></div>
   `;
 
-  // Hero Art
   document.getElementById('heroArt').innerHTML = `
     <div class="art-wrap">
       <svg class="art-icon" viewBox="0 0 64 64" fill="none">
@@ -85,7 +518,6 @@ function renderHome() {
     </div>
   `;
 
-  // Category Grid (Using Set)
   const catGrid = document.getElementById('categoryGrid');
   catGrid.innerHTML = Array.from(categoriesSet).map(cat => {
     const count = PRODUCTS.filter(p => p.category === cat).length;
@@ -98,7 +530,6 @@ function renderHome() {
     `;
   }).join('');
 
-  // Featured Grid
   const featuredGrid = document.getElementById('featuredGrid');
   featuredGrid.innerHTML = PRODUCTS.slice(0, 3).map(p => createProductCardMarkup(p)).join('');
 }
@@ -113,7 +544,6 @@ function filterByCategory(catName) {
    6) SET OPERATIONS & PRODUCTS FILTERING
    ========================================================================= */
 function setupFilters() {
-  // Collect all unique tags using Set
   const allTags = new Set();
   PRODUCTS.forEach(p => p.tags.forEach(t => allTags.add(t)));
 
@@ -135,7 +565,6 @@ function setupFilters() {
     renderProducts();
   });
 
-  // Operation buttons
   const opBtns = document.querySelectorAll('.op-btn');
   opBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -147,7 +576,6 @@ function setupFilters() {
     });
   });
 
-  // Search Input & Clear Filters
   document.getElementById('searchInput').addEventListener('input', renderProducts);
   document.getElementById('clearFilters').addEventListener('click', () => {
     selectedTags.clear();
@@ -161,7 +589,6 @@ function renderProducts() {
   const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
   let filtered = PRODUCTS;
 
-  // 1. Text Search Filter
   if (searchTerm) {
     filtered = filtered.filter(p => 
       p.name.toLowerCase().includes(searchTerm) || 
@@ -170,27 +597,23 @@ function renderProducts() {
     );
   }
 
-  // 2. Set Operations Logic (Union / Intersection / Difference)
   if (selectedTags.size > 0) {
     filtered = filtered.filter(product => {
       const productTags = new Set(product.tags);
 
       if (currentOp === 'union') {
-        // Union: Has AT LEAST ONE selected tag
         for (let tag of selectedTags) {
           if (productTags.has(tag)) return true;
         }
         return false;
       } 
       else if (currentOp === 'intersect') {
-        // Intersection: Has ALL selected tags
         for (let tag of selectedTags) {
           if (!productTags.has(tag)) return false;
         }
         return true;
       } 
       else if (currentOp === 'difference') {
-        // Difference: Has first selected tag BUT NOT others
         const tagsArr = Array.from(selectedTags);
         const firstTag = tagsArr[0];
         const otherTags = tagsArr.slice(1);
@@ -205,10 +628,8 @@ function renderProducts() {
     });
   }
 
-  // Render Result Counter
   document.getElementById('resultLine').innerHTML = `พบสินค้า <b>${filtered.length}</b> รายการ`;
 
-  // Render Grid
   const productsGrid = document.getElementById('productsGrid');
   if (filtered.length === 0) {
     productsGrid.innerHTML = `<div class="empty-note" style="grid-column: 1/-1">ไม่พบสินค้าที่ตรงตามเงื่อนไข Set / คำค้นหาที่ระบุ</div>`;
@@ -310,7 +731,6 @@ function renderCart() {
     `).join('');
   }
 
-  // Calculations
   const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.qty), 0);
   let discount = 0;
   let shipping = cart.length > 0 ? 40 : 0;
@@ -327,7 +747,6 @@ function renderCart() {
   document.getElementById('shipLine').innerText = `฿${shipping}`;
   document.getElementById('grandTotal').innerText = `฿${grandTotal}`;
 
-  // Promo Box Nudge
   const promoBox = document.getElementById('promoBox');
   if (subtotal >= 500) {
     promoBox.innerHTML = `
@@ -347,18 +766,14 @@ function renderCart() {
     promoBox.innerHTML = '';
   }
 
-  // Set Difference Recommendation Engine for Cart
   renderRecommendations();
 }
 
 /* =========================================================================
-   8) SET DIFFERENCE RECOMMENDATION ENGINE
+   8) RECOMMENDATION ENGINE
    ========================================================================= */
 function renderRecommendations() {
-  const cartCategories = new Set(cart.map(item => item.product.category));
   const cartProductIds = new Set(cart.map(item => item.product.id));
-
-  // Set Difference: Products NOT in cart but share category context or popular
   const recommended = PRODUCTS.filter(p => !cartProductIds.has(p.id)).slice(0, 4);
 
   const recoGrid = document.getElementById('recoGrid');
@@ -414,3 +829,5 @@ function closeModal() {
   switchPage('home');
 }
 </script>
+</body>
+</html>
